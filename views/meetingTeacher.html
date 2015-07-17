@@ -1,0 +1,51 @@
+<html >
+<head>
+    <title>Log-in</title>
+    <meta charset="UTF-8">
+    <script src='/javascripts/external/jquery-1.11.3.min.js'></script>
+    <script src='/javascripts/home.js'></script>
+    <script src='/javascripts/external/erizo.js'></script>
+    <link rel="stylesheet" href="/stylesheets/menu.css">
+    <link rel="stylesheet" href="/stylesheets/register.css">
+    <link rel="stylesheet" href="/stylesheets/chatAlumn.css">
+</head>
+
+
+<body>
+    <div id='cssmenu'>
+        <ul>
+            <li class='active has-sub'><a href='#'><span>Home</span></a></li>
+            <ul>
+                <li id="user-data"><a href='#'><span>Datos personales</span></a></li>
+                <li id="log-out"><a href='#'><span>Cerrar sesión</span></a></li>
+            </ul>
+            <li class='active has-sub'><a href='#'><span>Salas</span></a>
+                <ul>
+                    <li id="enter"><a href='#'><span>Entrar</span></a></li>
+                    <li id="publish"><a href='#'><span>Publicar</span></a></li>
+                    <li id="enviar"><a href='#'><span>Enviar</span></a></li>
+                </ul>
+            </li>
+            <li><a href='#'><span>About</span></a></li>
+            <li class='last'><a href='#'><span>Contact</span></a></li>
+        </ul>
+    </div>
+
+    <div id="salas">
+        <h1>Entrar a sala</h1><br>
+        <select id="my-select">
+
+        </select>
+        <button id="enter-room" type="button">Enter Room</button>
+    </div>
+
+    <div id="wrapper">
+        <div id="chatbox"></div>
+        <form id="message">
+            <input name="usermsg" type="text" id="usermsg" size="63" />
+            <input name="submitmsg" type="submit"  id="submitmsg" value="Send" />
+        </form>
+    </div>
+
+    <div id='video'></div>
+</body>

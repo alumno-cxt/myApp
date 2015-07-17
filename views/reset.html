@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log-in</title>
+    <meta charset="UTF-8">
+    <script src='/javascripts/external/jquery-1.11.3.min.js'></script>
+    <script src='/javascripts/reset.js'></script>
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+</head>
+
+<body>
+    <div class="forgot-card">
+
+        <h1>Recuperar contraseña</h1><br>
+        <p>Introduzca su nueva contraseña</p>
+        <form id="forgot-form">
+            <input type="password" name="pass" placeholder="Password">
+            <input type="submit" class="forgot forgot-submit" value="Recuperar contraseña">
+        </form>
+
+        <div id="forgot-error" class="forgot-help">El email no está registrado</div>
+        <div id="forgot-success" class="forgot-help">Compruebe su bandeja de correo</div>
+    </div>
+</body>
+</html>

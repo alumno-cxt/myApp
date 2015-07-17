@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <title>Log-in</title>
+    <meta charset="UTF-8">
+    <script src='/javascripts/external/jquery-1.11.3.min.js'></script>
+    <script src='/javascripts/login.js'></script>
+    <link rel="stylesheet" href="/stylesheets/login.css">
+</head>
+
+<body>
+    <div class="login-card">
+
+        <h1>Log-in</h1><br>
+
+        <form id="login-form">
+            <input type="text" name="nick" placeholder="Username">
+            <input type="password" name="pass" placeholder="Password">
+            <input type="submit" class="login login-submit" value="Log-in">
+        </form>
+
+        <div id="login-error" class="login-help">Error en el login</div>
+        <a href="/forgot">¿Olvidó la contraseña?</a>
+    </div>
+</body>
+</html>

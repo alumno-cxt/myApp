@@ -1,0 +1,79 @@
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.main-header {
+
+    padding: 0.4em 22em;
+    border: 2px solid #2675a9;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    background: #2980b9;
+}
+.main-header:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+
+/* Nav Demo Styles -------------------- */
+
+.main-nav,
+.drop-nav {
+    background: #2c3e50;
+    font-size: 14px;
+}
+.main-nav {
+    float: right;
+    border-radius: 4px;
+    margin-top: 8px;
+    border: solid 1px #1e2a36;
+}
+.main-nav > li {
+    float: left;
+    border-left: solid 1px #1e2a36;
+}
+.main-nav li:first-child {
+    border-left: none;
+}
+.main-nav a {
+    color: #fff;
+    display: block;
+    padding: 10px 30px;
+    text-decoration: none;
+}
+.dropdown,
+.flyout {
+    position: relative;
+}
+.dropdown:after {
+    content: "\25BC";
+    font-size: .5em;
+    display: block;
+    position: absolute;
+    top: 38%;
+    right: 12%;
+}
+.drop-nav,
+.flyout-nav {
+    position: absolute;
+    display: none;
+}
+.drop-nav li {
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.dropdown:hover > .drop-nav,
+.flyout:hover > .flyout-nav {
+    display: block;
+}
+.flyout-nav {
+    left: 100%;
+    top: 0;
+}
+.flyout:hover a,
+.flyout-nav {
+    background: #395066;
+}
