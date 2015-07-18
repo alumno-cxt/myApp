@@ -10,8 +10,13 @@ $(document).ready(function(){
             	console.log('success login');
                 window.location='/home';
             },
-            error: function(){
+            error: function(res){
                 $('#login-error').show();
+                if(res.status == 500) {
+                    $('#login-error').html('Error en el servidor');
+                }else{
+                    $('#login-error').html('Los datos introducidos son incorrectos');
+                }
             }
         });
     });

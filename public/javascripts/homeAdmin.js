@@ -1,4 +1,18 @@
 $(document).ready(function(){
+    $('#register-show').click(function(){
+        $('#register').show();
+    });
+
+    $('#log-out').click(function(){
+        $.ajax({
+            type: 'DELETE',
+            url: '/',
+            success: function(res){
+                window.location='/';
+            }
+        });
+    });
+
     $('#register-form').submit(function(e){
         e.preventDefault();
         formData = $(this).serialize();
@@ -20,16 +34,22 @@ $(document).ready(function(){
             }
         });
     });
+
 	$('#create').click(function(e){
         $.ajax({
-            type: 'GET',
-            url: '/room',
+            type: 'POST',
+            url: '/rooms',
             success: function(){
             	return;
             }
         });		
 	});
 });
+
+function resetView(){
+    $('#register').hide();
+
+}
 
 function registerHandler(code){
 	$('#register-loading').hide();
