@@ -55,7 +55,11 @@ router.get('/home', function(req, res){
 
 /* GET home page. */
 router.get('/meeting', function(req, res){
-    res.sendfile('meeting', resFileOpts);
+    if(req.session.email === undefined){ res.status('401'); return;}
+    if(req.session.token === undefined){ res.status('401'); return;}
+    if(req.session.role == 'alumn'){ res.render('meetingAlumn', {tokenR: req.session.token}); return;}
+    if(req.session.role == 'teacher'){ res.render('meetingTeacher', {tokenR: req.session.token}); return;}
+    res.status('404');
 });
 
 /* GET forgot page */

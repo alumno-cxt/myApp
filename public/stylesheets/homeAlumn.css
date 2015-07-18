@@ -1,0 +1,7 @@
+body {
+    background: url(/images/login-canvas.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+}
