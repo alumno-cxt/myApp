@@ -57,8 +57,14 @@ router.get('/home', function(req, res){
 router.get('/meeting', function(req, res){
     if(req.session.email === undefined){ res.status('401'); return;}
     if(req.session.token === undefined){ res.status('401'); return;}
-    if(req.session.role == 'alumn'){ res.render('meetingAlumn', {tokenR: req.session.token}); return;}
-    if(req.session.role == 'teacher'){ res.render('meetingTeacher', {tokenR: req.session.token}); return;}
+    if(req.session.role == 'alumn'){
+        res.render('meetingAlumn', {token: req.session.token, role: req.session.role, nick: req.session.nick });
+        return;
+    }
+    if(req.session.role == 'teacher'){
+        res.render('meetingTeacher', {token: req.session.token, role: req.session.role, nick: req.session.nick});
+        return;
+    }
     res.status('404');
 });
 

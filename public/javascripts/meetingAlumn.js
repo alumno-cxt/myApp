@@ -1,19 +1,25 @@
 var localStream;
-//tokenR is variable declared at the html page
-var tokenJ = tokenR;
-
+var screen_stream;
+var conn = 0;
 $(document).ready(function(){
-
-    localStream = Erizo.Stream({video: true, audio: false, data:true, videoSize:[240, 180, 240, 180]});
+    //token is stored in <meta> tag at the html page
+    var tokenJ = $('meta[name=token]').attr("content");
+    var role = $('meta[name=role]').attr("content");
+    var nick = $('meta[name=nick]').attr("content");
+    console.log(tokenJ);
+    //screen_stream = Erizo.Stream({screen: true});
+    localStream = Erizo.Stream({screen: false, audio: false, data:true, videoSize:[240, 180, 240, 180],
+        attributes:{nick: nick, role: role}});
     localStream.init();
     localStream.addEventListener('access-accepted', function(ev) {
         console.log('access granted');
+        if(conn) room.publish(localStream, {maxVideoBW: 300});
     });
 
 	$('#message').submit(function(e){
         if(localStream){
             e.preventDefault();
-            var m = $('#usermsg').val();
+            var m = nick + ': ' + $('#usermsg').val();
             $('#chatbox').append($('<div>', {text: m}));
             $('#usermsg').val('');
             $('#usermsg').focus();
@@ -22,6 +28,7 @@ $(document).ready(function(){
     });
 
     room = Erizo.Room({token: tokenJ});
+
     var subscribeToStreams = function (streams) {
         for (var index in streams) {
             var stream = streams[index];
@@ -32,24 +39,25 @@ $(document).ready(function(){
     };
 
     room.addEventListener("room-connected", function (roomEvent) {
+        conn=1;
         console.log('in the room');
         console.log(localStream.hasData());
-
-        room.publish(localStream, {maxVideoBW: 300});
         subscribeToStreams(roomEvent.streams);
     });
 
     room.addEventListener("stream-subscribed", function(streamEvent) {
         console.log('stream subscribed');
         var stream = streamEvent.stream;
+        var attributes = stream.getAttributes();
         stream.addEventListener("stream-data", function(evt){
             $('#chatbox').append($('<div>',{text: evt.msg.text}));
         });
+        console.log(attributes);
         //var div = document.createElement('div');
         //div.setAttribute("style", "width: 320px; height: 240px;");
         //div.setAttribute("id", "test" + stream.getID());
         //document.body.appendChild(div);
-        stream.show('video');
+        if(attributes.role == 'teacher') stream.show('video');
     });
 
     room.addEventListener("stream-added", function (streamEvent) {
@@ -66,8 +74,7 @@ $(document).ready(function(){
         // Remove stream from DOM
         var stream = streamEvent.stream;
         if (stream.elementID !== undefined) {
-            var element = document.getElementById(stream.elementID);
-            document.body.removeChild(element);
+          ///////////////////////////////////////////
         }
     });
 
@@ -78,5 +85,7 @@ $(document).ready(function(){
     });
 
     room.connect();
+
+
 
 });

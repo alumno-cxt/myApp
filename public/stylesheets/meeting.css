@@ -7,11 +7,18 @@ body {
 }
 
 #video {
-	height: 376px;
-	width: 504px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #710c47;
+	height: 301px;
+	width: 404px;
 }
 
 #wrapper {
+    position: absolute;
+    top: 321px;
+    right: 20px;
     margin:0 auto;
     padding-bottom:25px;
     background:#EBF4FB;
@@ -31,7 +38,7 @@ body {
     margin-bottom:25px;
     padding:10px;
     background:#fff;
-    height:270px;
+    height:200px;
     width:430px;
     border:1px solid #ACD8F0;
     overflow:auto; }
