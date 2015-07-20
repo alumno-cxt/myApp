@@ -3,26 +3,26 @@ var conn = 0;
 $(document).ready(function(){
     //token is stored in <meta> tag at the html page
     var tokenJ = $('meta[name=token]').attr("content");
-    var role = $('meta[name=role]').attr("content");
     var nick = $('meta[name=nick]').attr("content");
-    console.log(tokenJ);
 
     localStream = Erizo.Stream({video: true, audio: false, data:true, videoSize:[240, 180, 240, 180],
-        attributes:{nick: nick, role: role}});
+        attributes:{nick: nick, role: 'teacher'}});
     localStream.init();
     localStream.addEventListener('access-accepted', function(ev) {
         console.log('access granted');
-        if(conn) room.publish(localStream, {maxVideoBW: 300});
+        if(conn)room.publish(localStream, {maxVideoBW: 300});
+        localStream.play('video-teacher');
     });
 
     $('#message').submit(function(e){
         if(localStream){
             e.preventDefault();
             var m = $('#usermsg').val();
-            $('#chatbox').append($('<div>', {text: m}));
+            $('#chatbox').append($('<div>'));
+            $('#chatbox div').last().html('<p><b>' + nick + ': </b>' + m + '</p>');
             $('#usermsg').val('');
             $('#usermsg').focus();
-            localStream.sendData({text: m});
+            localStream.sendData({text: m, nick: nick});
         }
     });
 
@@ -47,13 +47,9 @@ $(document).ready(function(){
         console.log('stream subscribed');
         var stream = streamEvent.stream;
         stream.addEventListener("stream-data", function(evt){
-            $('#chatbox').append($('<div>',{text: evt.msg.text}));
+            $('#chatbox').append($('<div>'));
+            $('#chatbox div').last().html('<p><b>' + evt.msg.nick + ': </b>' + evt.msg.text + '</p>');
         });
-        //var div = document.createElement('div');
-        //div.setAttribute("style", "width: 320px; height: 240px;");
-        //div.setAttribute("id", "test" + stream.getID());
-        //document.body.appendChild(div);
-        stream.show('video');
     });
 
     room.addEventListener("stream-added", function (streamEvent) {
@@ -61,7 +57,6 @@ $(document).ready(function(){
         var streams = [];
         streams.push(streamEvent.stream);
         subscribeToStreams(streams);
-        //document.getElementById("recordButton").disabled = false;
     });
 
 

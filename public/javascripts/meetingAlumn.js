@@ -1,37 +1,45 @@
 var localStream;
-var screen_stream;
 var conn = 0;
+
 $(document).ready(function(){
     //token is stored in <meta> tag at the html page
     var tokenJ = $('meta[name=token]').attr("content");
-    var role = $('meta[name=role]').attr("content");
     var nick = $('meta[name=nick]').attr("content");
+    var room;
     console.log(tokenJ);
-    //screen_stream = Erizo.Stream({screen: true});
-    localStream = Erizo.Stream({screen: false, audio: false, data:true, videoSize:[240, 180, 240, 180],
-        attributes:{nick: nick, role: role}});
+
+    localStream = Erizo.Stream({video: true, audio: false, data:true, videoSize:[240, 180, 240, 180],
+        attributes:{nick: nick, role: 'alumn'}});
     localStream.init();
-    localStream.addEventListener('access-accepted', function(ev) {
+    localStream.addEventListener('access-accepted', function() {
         console.log('access granted');
         if(conn) room.publish(localStream, {maxVideoBW: 300});
+    });
+
+    $('#video').click(function(){
+        //localStream.init();
     });
 
 	$('#message').submit(function(e){
         if(localStream){
             e.preventDefault();
-            var m = nick + ': ' + $('#usermsg').val();
-            $('#chatbox').append($('<div>', {text: m}));
-            $('#usermsg').val('');
-            $('#usermsg').focus();
-            localStream.sendData({text: m});
+            var $c = $('#usermsg');
+            var m = $c.val();
+            $c.val('');
+            $c.focus();
+            $c = $('#chatbox');
+            $c.append($('<div>'));
+            $c.find('div').last().html('<p><b>' + nick + ': </b>' + m + '</p>');
+            $c.animate({scrollTop: 0xfffffff});
+            localStream.sendData({text: m, nick: nick});
         }
     });
 
     room = Erizo.Room({token: tokenJ});
 
     var subscribeToStreams = function (streams) {
-        for (var index in streams) {
-            var stream = streams[index];
+        for (var stream in streams) {
+            //var stream = streams[index];
             if (localStream.getID() !== stream.getID()) {
                 room.subscribe(stream);
             }
@@ -50,14 +58,11 @@ $(document).ready(function(){
         var stream = streamEvent.stream;
         var attributes = stream.getAttributes();
         stream.addEventListener("stream-data", function(evt){
-            $('#chatbox').append($('<div>',{text: evt.msg.text}));
+            $('#chatbox').append($('<div>'));
+            $('div', this).last().html('<p><b>' + evt.msg.nick + ': </b>' + evt.msg.text + '</p>');
         });
         console.log(attributes);
-        //var div = document.createElement('div');
-        //div.setAttribute("style", "width: 320px; height: 240px;");
-        //div.setAttribute("id", "test" + stream.getID());
-        //document.body.appendChild(div);
-        if(attributes.role == 'teacher') stream.show('video');
+        if(attributes.role == 'teacher') stream.show('video-teacher');
     });
 
     room.addEventListener("stream-added", function (streamEvent) {
@@ -65,7 +70,6 @@ $(document).ready(function(){
         var streams = [];
         streams.push(streamEvent.stream);
         subscribeToStreams(streams);
-        //document.getElementById("recordButton").disabled = false;
     });
 
 
@@ -78,7 +82,7 @@ $(document).ready(function(){
         }
     });
 
-    room.addEventListener("stream-failed", function (streamEvent){
+    room.addEventListener("stream-failed", function (){
         console.log("STREAM FAILED, DISCONNECTION");
         room.disconnect();
 
