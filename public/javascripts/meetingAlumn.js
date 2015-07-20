@@ -6,7 +6,6 @@ $(document).ready(function(){
     var tokenJ = $('meta[name=token]').attr("content");
     var nick = $('meta[name=nick]').attr("content");
     var room;
-    console.log(tokenJ);
 
     localStream = Erizo.Stream({video: true, audio: false, data:true, videoSize:[240, 180, 240, 180],
         attributes:{nick: nick, role: 'alumn'}});
@@ -14,10 +13,6 @@ $(document).ready(function(){
     localStream.addEventListener('access-accepted', function() {
         console.log('access granted');
         if(conn) room.publish(localStream, {maxVideoBW: 300});
-    });
-
-    $('#video').click(function(){
-        //localStream.init();
     });
 
 	$('#message').submit(function(e){
@@ -38,8 +33,8 @@ $(document).ready(function(){
     room = Erizo.Room({token: tokenJ});
 
     var subscribeToStreams = function (streams) {
-        for (var stream in streams) {
-            //var stream = streams[index];
+        for (var index in streams) {
+            var stream = streams[index];
             if (localStream.getID() !== stream.getID()) {
                 room.subscribe(stream);
             }
@@ -56,13 +51,18 @@ $(document).ready(function(){
     room.addEventListener("stream-subscribed", function(streamEvent) {
         console.log('stream subscribed');
         var stream = streamEvent.stream;
+        console.log(stream.getID());
         var attributes = stream.getAttributes();
         stream.addEventListener("stream-data", function(evt){
-            $('#chatbox').append($('<div>'));
-            $('div', this).last().html('<p><b>' + evt.msg.nick + ': </b>' + evt.msg.text + '</p>');
+            var $c = $('#chatbox').append($('<div>'));
+            $c.find('div').last().html('<p><b>' + evt.msg.nick + ': </b>' + evt.msg.text + '</p>');
         });
-        console.log(attributes);
-        if(attributes.role == 'teacher') stream.show('video-teacher');
+        if(attributes.role == 'teacher'){
+            stream.show('video-teacher');
+        }else {
+            $('#video-alumn').append($('<div>').attr('id', stream.getID().toString()));
+            stream.show(stream.getID().toString());
+        }
     });
 
     room.addEventListener("stream-added", function (streamEvent) {
@@ -78,7 +78,7 @@ $(document).ready(function(){
         // Remove stream from DOM
         var stream = streamEvent.stream;
         if (stream.elementID !== undefined) {
-          ///////////////////////////////////////////
+            $('#' + stream.elementID.toString()).remove();
         }
     });
 

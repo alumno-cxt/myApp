@@ -17,11 +17,14 @@ $(document).ready(function(){
     $('#message').submit(function(e){
         if(localStream){
             e.preventDefault();
-            var m = $('#usermsg').val();
-            $('#chatbox').append($('<div>'));
-            $('#chatbox div').last().html('<p><b>' + nick + ': </b>' + m + '</p>');
-            $('#usermsg').val('');
-            $('#usermsg').focus();
+            var $c = $('#usermsg');
+            var m = $c.val();
+            $c.val('');
+            $c.focus();
+            $c = $('#chatbox');
+            $c.append($('<div>'));
+            $c.find('div').last().html('<p><b>' + nick + ': </b>' + m + '</p>');
+            $c.animate({scrollTop: 0xfffffff});
             localStream.sendData({text: m, nick: nick});
         }
     });
@@ -47,9 +50,11 @@ $(document).ready(function(){
         console.log('stream subscribed');
         var stream = streamEvent.stream;
         stream.addEventListener("stream-data", function(evt){
-            $('#chatbox').append($('<div>'));
-            $('#chatbox div').last().html('<p><b>' + evt.msg.nick + ': </b>' + evt.msg.text + '</p>');
+            var $c = $('#chatbox').append($('<div>'));
+            $c.find('div').last().html('<p><b>' + evt.msg.nick + ': </b>' + evt.msg.text + '</p>');
         });
+        $('#video-alumn').append($('<div>').attr('id', stream.getID().toString()));
+        stream.show(stream.getID().toString());
     });
 
     room.addEventListener("stream-added", function (streamEvent) {
@@ -65,8 +70,7 @@ $(document).ready(function(){
         // Remove stream from DOM
         var stream = streamEvent.stream;
         if (stream.elementID !== undefined) {
-            var element = document.getElementById(stream.elementID);
-            document.body.removeChild(element);
+            $('#' + stream.elementID.toString()).remove();
         }
     });
 
