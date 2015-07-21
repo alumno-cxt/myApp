@@ -35,7 +35,7 @@ $(document).ready(function(){
         });
     });
 
-	$('#create').click(function(e){
+	$('#create-room').click(function(e){
         $.ajax({
             type: 'POST',
             url: '/rooms',
@@ -44,6 +44,17 @@ $(document).ready(function(){
             }
         });		
 	});
+
+    $('#delete-room').click(function(e){
+        $.ajax({
+            type: 'DELETE',
+            url: '/rooms',
+            success: function(){
+                //TODO
+                return;
+            }
+        });
+    });
 });
 
 function resetView(){

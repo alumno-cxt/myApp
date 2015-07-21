@@ -3,22 +3,22 @@ var N = require('../lib/external/nuve');
 var router = express.Router();
 
 /* Create room */
-router.post('/', function(req, res, next){
-    N.API.createRoom('meeting', function(room) {
+router.post('/', function(req, res, next) {
+    N.API.createRoom('meeting', function (room) {
         console.log('Created room ', room._id);
         res.status('201').send(room._id).end();
-    });
-}, function (err){
-    next(err)
+    }, function (err) {
+        next(err)
+    }, {p2p: true});
 });
 
 /* GET all rooms */
 router.get('/', function(req, res, next){
     N.API.getRooms(function(roomList){
         res.status('200').send(roomList).end();
+    }, function (err){
+        next(err)
     });
-}, function (err){
-    next(err)
 });
 
 /* Create token for joining room */
