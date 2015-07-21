@@ -5,8 +5,9 @@ $(document).ready(function(){
     var tokenJ = $('meta[name=token]').attr("content");
     var nick = $('meta[name=nick]').attr("content");
 
-    localStream = Erizo.Stream({video: true, audio: false, data:true, videoSize:[240, 180, 240, 180],
-        attributes:{nick: nick, role: 'teacher'}});
+    localStream = Erizo.Stream({screen: true});
+    //localStream = Erizo.Stream({video: true, audio: false, data:true, videoSize:[240, 180, 240, 180],
+      //  attributes:{nick: nick, role: 'teacher'}});
     localStream.init();
     localStream.addEventListener('access-accepted', function(ev) {
         console.log('access granted');
