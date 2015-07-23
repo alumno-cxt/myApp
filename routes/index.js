@@ -42,6 +42,9 @@ router.get('/home', function(req, res){
         if(req.session.role === 'admin'){
             res.sendFile('homeAdmin.html',resFileOpts);
         }
+        if(req.session.role === 'planner'){
+            res.sendFile('homePlanner.html',resFileOpts);
+        }
         if(req.session.role === 'alumn'){
             res.sendFile('homeAlumn.html', resFileOpts);
         }

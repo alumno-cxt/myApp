@@ -10,53 +10,46 @@
 </head>
 
 <body>
-    <header class="main-header">
-        <a class="logo" href="#"></a>
-        <ul class="main-nav">
-            <li class="dropdown">
-                <a href="#">Bienvenido</a>
-                <ul class="drop-nav">
-                    <li><a href="#">Datos personales</a></li>
-                    <li id="log-out"><a href="#">Cerrar sesión</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">Usuarios</a>
-                <ul class="drop-nav">
-                    <li id="register-show"><a href="#">Añadir</a></li>
-                    <li><a href="#">Administrar</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#">Salas</a>
-                <ul class="drop-nav">
-                    <li id="create-room"><a href="#">Crear</a></li>
-                    <li id="delete-room"><a href="#">Eliminar</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </header>
+<header class="main-header">
+    <a class="logo" href="#"></a>
+    <ul class="main-nav">
+        <li class="dropdown">
+            <a href="#">Bienvenido</a>
+            <ul class="drop-nav">
+                <li><a href="#">Datos personales</a></li>
+                <li id="log-out"><a href="#">Cerrar sesión</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#">Clases</a>
+            <ul class="drop-nav">
+                <li id="register-show"><a href="#">Crear</a></li>
+                <li><a href="#">Añadir alumnos</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</header>
 
-    <div id="register" class="register-card">
+<div id="register" class="register-card">
 
-        <h1>Registrar Usuario</h1><br>
+    <h1>Registrar Usuario</h1><br>
 
-        <form id="register-form">
-            <input id="nick" type="text" name="nick" placeholder="Username">
-            <input id="email" type="text" name="email" placeholder="e-mail">
-            <input id="pass" type="password" name="pass" placeholder="Password">
-            <div class="radio-role">
-                <input type="radio" name="role" value="alumn" checked>Alumno
-                <input type="radio" name="role" value="teacher">Profesor
-                <input type="radio" name="role" value="planner">Jefe
-            </div>
-            <input type="submit" class="register register-submit" value="Registrar">
-        </form>
+    <form id="register-form">
+        <input id="nick" type="text" name="nick" placeholder="Username">
+        <input id="email" type="text" name="email" placeholder="e-mail">
+        <input id="pass" type="password" name="pass" placeholder="Password">
+        <div class="radio-role">
+            <input type="radio" name="role" value="alumn" checked>Alumno
+            <input type="radio" name="role" value="teacher">Profesor
+            <input type="radio" name="role" value="planner">Jefe
+        </div>
+        <input type="submit" class="register register-submit" value="Registrar">
+    </form>
 
-        <div id="register-success" class="register-help">Usuario dado de alta con éxito</div>
-        <div id="register-loading"><img src="/images/loader.gif"/></div>
-        <div id="register-error" class="register-help">Ya esxiste otro usuario con ese correo</div>
-    </div>
+    <div id="register-success" class="register-help">Usuario dado de alta con éxito</div>
+    <div id="register-loading"><img src="/images/loader.gif"/></div>
+    <div id="register-error" class="register-help">Ya esxiste otro usuario con ese correo</div>
+</div>
 </body>
 </html>
