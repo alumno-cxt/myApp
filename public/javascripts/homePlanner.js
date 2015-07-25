@@ -2,30 +2,52 @@ function crHandler(code){
     $('#alumns').css('borderColor','');
     $('#teacher').css('borderColor','');
     $('#room-name').css('borderColor','');
+    $('#loaded-alumn').css('borderColor','');
+    $('#create-room-error').hide();
+    $('#create-room-success').hide();
     switch (code) {
         case 'room-short':
             $('#room-name').css('borderColor','red');
+            $('#create-room-error').html('El nombre de la sala debe tener más de 6 letras');
+            $('#create-room-error').show();
             break;
         case 'teacher-404':
+            $('#room-name').css('borderColor','red');
+            $('#create-room-error').html('El nombre del profesor no existe');
+            $('#create-room-error').show();
             break;
-        case 'teacher-void':
+        case 'alumns-void':
+            $('#loaded-alumn').css('borderColor','red');
+            $('#create-room-error').html('No hay alumnos en la lista');
+            $('#create-room-error').show();
             break;
         case 'alumn-404':
             break;
         case 'room-exists':
+            $('#room-name').css('borderColor','red');
+            $('#create-room-error').html('El nombre de la sala ya esxiste');
+            $('#create-room-error').show();
             break;
     }
 }
+
+var teacherExists = true;
+var alumnExists = true;
 
 function validate(room, teacher){
     if(room.length < 6) {
         crHandler('room-short');
         return 0;
     }
-
+    if(teacher.length < 6) {
+        crHandler('room-short');
+        return 0;
+    }
 }
 
 $(document).ready(function() {
+    $('#create-room-error').show();
+
     $('#register-show').click(function () {
         $('#register').show();
     });
@@ -44,16 +66,22 @@ $(document).ready(function() {
         e.preventDefault();
         var a = [];
         var i = 0;
+        var x = 0;
         $('#loaded-alumns li').each(function(e){
-            l.push(e.text());
+            a.push(e.text());
+            x++;
         });
+        if(x == 0){
+            crHandler('alumns-void');
+            return
+        }
         var t = $('#teacher').val();
         var r = $('#room-name').val();
         if(!validate(t,r)) return;
         $.ajax({
             type: 'POST',
             url: '/rooms',
-            data: JSON.stringify({room: r}),
+            data: JSON.stringify({room: r, teacher: t, alumns: a}),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Content-type", "application/json");
             },
