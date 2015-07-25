@@ -35,7 +35,11 @@ app.use(session({secret: 'mf82akq90e83l0q978nqllq191pe4n2ieh',
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Enable CORS
-app.use(cors());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 app.use('/', routes);
 app.use('/users', users);

@@ -30,6 +30,7 @@ body {
     width: 20%;
     margin-bottom: 10px;
     position: relative;
+    right: -43px;
 }
 
 .create-room-card input[type=text], input[type=submit] {
@@ -121,34 +122,71 @@ body {
     color: green;
 }
 
-.suggestion-list {
+.alumn-suggestion-list-cr {
     display: none;
     position: relative;
     background: #FFF none repeat scroll 0% 0%;
     border: 1px solid #80B6E1;
     margin-top: 5px;
     max-height: 150px;
-    max-width: 160px;
+    max-width: 163px;
     padding: 4px;
     z-index: 200;
-    overflow: scroll;
+    overflow-y: scroll;
     overflow-x: hidden;
-    top: -30px;
-    right: -190px;
+    top: -41px;
+    right: -380px;
 }
 
-.suggestion-list li:hover{
+.alumn-suggestion-list-cr li:hover{
     background-color: #5e604f;
 }
 
-.loaded-alumn-list {
+.teacher-suggestion-list-cr {
+    display: none;
     position: relative;
     background: #FFF none repeat scroll 0% 0%;
     border: 1px solid #80B6E1;
     margin-top: 5px;
     max-height: 150px;
-    max-width: 160px;
+    max-width: 163px;
+    padding: 4px;
+    z-index: 200;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    top: -41px;
+    right: -190px;
+}
+
+.teacher-suggestion-list-cr li:hover{
+    background-color: #5e604f;
+}
+
+.loaded-alumn-list {
+    display: none;
+    position: absolute;
+    background: #FFF none repeat scroll 0% 0%;
+    border: 1px solid #80B6E1;
+    margin-top: 5px;
+    max-height: 150px;
+    width: 163px;
     padding: 4px;
     z-index: 150;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    right: 54px;
+    top: 200px;
+}
+
+#add-alumn-cr{
+    padding: 4px;
+    z-index: 150;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    right: 256px;
+    top: 152px;
+    position: absolute;
+    font-size: 20px;
+    height: 43px;
+    width: 40px;
 }

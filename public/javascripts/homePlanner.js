@@ -1,3 +1,30 @@
+function crHandler(code){
+    $('#alumns').css('borderColor','');
+    $('#teacher').css('borderColor','');
+    $('#room-name').css('borderColor','');
+    switch (code) {
+        case 'room-short':
+            $('#room-name').css('borderColor','red');
+            break;
+        case 'teacher-404':
+            break;
+        case 'teacher-void':
+            break;
+        case 'alumn-404':
+            break;
+        case 'room-exists':
+            break;
+    }
+}
+
+function validate(room, teacher){
+    if(room.length < 6) {
+        crHandler('room-short');
+        return 0;
+    }
+
+}
+
 $(document).ready(function() {
     $('#register-show').click(function () {
         $('#register').show();
@@ -13,15 +40,23 @@ $(document).ready(function() {
         });
     });
 
-    $('#register-form').submit(function (e) {
+    $('#create-room-form').submit(function(e) {
         e.preventDefault();
-        formData = $(this).serialize();
-        if (registerValidator()) return;
-        registerHandler('submit');
+        var a = [];
+        var i = 0;
+        $('#loaded-alumns li').each(function(e){
+            l.push(e.text());
+        });
+        var t = $('#teacher').val();
+        var r = $('#room-name').val();
+        if(!validate(t,r)) return;
         $.ajax({
             type: 'POST',
-            url: '/users',
-            data: formData,
+            url: '/rooms',
+            data: JSON.stringify({room: r}),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Content-type", "application/json");
+            },
             success: function (res) {
                 registerHandler('success');
             },
@@ -35,8 +70,40 @@ $(document).ready(function() {
         });
     });
 
+    $('#add-alumn-cr').click(function() {
+        var a = $('#alumns').val();
+        if(a.length = 0) return;
+        $('#loaded-alumns').show();
+        var f = false;
+        $('#loaded-alumns li').each(function(){
+            if($(this).text() == a){
+                f = true;
+            }
+        });
+        if(f) return;
+        $('#loaded-alumns').append($('<li>', {text: a}));
+        $('#alumns').val('');
 
-    $('#teacher').keyup(function(){
+    });
+
+    $('#alumns').keydown(function(e){
+        if(e.which == 13){
+            var a = $('#alumns').val();
+            if(a.length = 0) return;
+            $('#loaded-alumns').show();
+            $('#loaded-alumns li').each(function(e){
+                if(e.text() == a){
+                    return;
+                }
+            });
+            $('#loaded-alumns').append($('<li>', {text: a}));
+            $('#alumns').val('');
+        }
+    });
+
+
+    $('#teacher').keyup(function(e){
+        if(e.which == 13) return;
         var pattern = $('#teacher').val();
         $.ajax({
             type: 'GET',
@@ -57,6 +124,38 @@ $(document).ready(function() {
                 });
             }
         });
+    });
+
+    $('#alumns').keyup(function(e){
+        if(e.which == 13) return;
+        var pattern = $('#alumns').val();
+        $.ajax({
+            type: 'GET',
+            url: '/users?role=alumn&pattern=' + pattern,
+            success: function (res) {
+                $('#alumn-suggestion').empty();
+                if (res.users.length != 0){
+                    $('#alumn-suggestion').show();
+                }else{
+                    $('#alumn-suggestion').hide();
+                }
+                for(var i in res.users) {
+                    $('#alumn-suggestion').append($('<li>', {text: res.users[i]}));
+                }
+                $('#alumn-suggestion li').click(function(){
+                    $('#alumns').val($(this).text());
+                    $('#alumn-suggestion').hide();
+                });
+            }
+        });
+    });
+
+    $('#alumns').click(function(){
+        $('#teacher-suggestion').hide();
+    });
+
+    $('#teacher').click(function(){
+        $('#alumn-suggestion').hide();
     });
 
 });
