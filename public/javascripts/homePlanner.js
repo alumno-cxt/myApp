@@ -12,7 +12,7 @@ function crHandler(code){
             $('#create-room-error').show();
             break;
         case 'teacher-404':
-            $('#room-name').css('borderColor','red');
+            $('#teacher').css('borderColor','red');
             $('#create-room-error').html('El nombre del profesor no existe');
             $('#create-room-error').show();
             break;
@@ -25,7 +25,7 @@ function crHandler(code){
             break;
         case 'room-exists':
             $('#room-name').css('borderColor','red');
-            $('#create-room-error').html('El nombre de la sala ya esxiste');
+            $('#create-room-error').html('El nombre de la sala ya existe');
             $('#create-room-error').show();
             break;
         case 'success':
@@ -38,8 +38,7 @@ function crHandler(code){
     }
 }
 
-var teacherExists = true;
-var alumnExists = true;
+
 
 function validate(room, teacher){
     if(room.length < 6) {
@@ -47,13 +46,14 @@ function validate(room, teacher){
         return 0;
     }
     if(teacher.length < 6) {
-        crHandler('room-short');
+        crHandler('teacher-404');
         return 0;
     }
+    return 1;
 }
 
 $(document).ready(function() {
-    $('#create-room-error').show();
+    $('#create-room-error').hide();
 
     $('#register-show').click(function () {
         $('#register').show();
@@ -84,11 +84,12 @@ $(document).ready(function() {
         }
         var t = $('#teacher').val();
         var r = $('#room-name').val();
-        if(!validate(t,r)) return;
+        if(!validate(r,t)) return;
+        crHandler('xxx');
         $.ajax({
             type: 'POST',
             url: '/rooms',
-            data: JSON.stringify({room: r, teacher: t, alumns: a}),
+            data: JSON.stringify({room_name: r, teacher: t, alumns: a}),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Content-type", "application/json");
             },

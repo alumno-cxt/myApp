@@ -10,18 +10,20 @@ router.post('/', function(req, res, next) {
         return;
     }
     N.API.createRoom(req.body.room_name, function (room) {
-        console.log('Created room ', room._id);
-        res.status('201').end();
         var data = {room_name: req.body.room_name, teacher: req.body.teacher,
             alumns: req.body.alumns ,licode_room: room._id}
         usersMgr.createRoom(data, function(err){
             if(err){
+                N.API.deleteRoom(room._id, function(){
+                    console.log('deleted');
+                });
                 next(err);
             }else{
                 res.status('201').end();
             }
         });
     }, function (err) {
+        console.log(err);
         next(err)
     }, {p2p: true});
 });

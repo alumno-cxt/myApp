@@ -103,10 +103,11 @@ body {
 }
 
 .create-room-help {
+    display: none;
     width: 100%;
     text-align: center;
     font-size: 15px;
-    display: none;
+
 }
 
 #create-room-loading{
@@ -115,10 +116,12 @@ body {
 }
 
 #create-room-error{
+    display: none;
     color: #E00000;
 }
 
 #create-room-success{
+    display: none;
     color: green;
 }
 
