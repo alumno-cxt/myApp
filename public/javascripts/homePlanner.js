@@ -28,6 +28,13 @@ function crHandler(code){
             $('#create-room-error').html('El nombre de la sala ya esxiste');
             $('#create-room-error').show();
             break;
+        case 'success':
+            $('#create-room-success').show();
+            break;
+        case '500':
+            $('#create-room-error').html('Error en el servidor');
+            $('#create-room-error').show();
+            break;
     }
 }
 
@@ -68,12 +75,12 @@ $(document).ready(function() {
         var i = 0;
         var x = 0;
         $('#loaded-alumns li').each(function(e){
-            a.push(e.text());
+            a.push($(this).text());
             x++;
         });
         if(x == 0){
             crHandler('alumns-void');
-            return
+            return;
         }
         var t = $('#teacher').val();
         var r = $('#room-name').val();
@@ -86,14 +93,10 @@ $(document).ready(function() {
                 xhr.setRequestHeader("Content-type", "application/json");
             },
             success: function (res) {
-                registerHandler('success');
+                crHandler('success');
             },
             error: function (res) {
-                if (res.status == 500) {
-                    registerHandler('500');
-                } else {
-                    registerHandler('duplicate');
-                }
+                crHandler('500');
             }
         });
     });
