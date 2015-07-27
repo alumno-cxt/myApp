@@ -22,14 +22,27 @@ function crHandler(code){
             $('#create-room-error').show();
             break;
         case 'alumn-404':
+            $('#alumns').css('borderColor','red');
+            $('#create-room-error').html('El nombre del alumno no existe');
+            $('#create-room-error').show();
             break;
         case 'room-exists':
             $('#room-name').css('borderColor','red');
             $('#create-room-error').html('El nombre de la sala ya existe');
             $('#create-room-error').show();
             break;
+        case 'alumn-404':
+            $('#alumns').css('borderColor','red');
+            $('#create-room-error').html('El nombre del alumno no existe');
+            $('#create-room-error').show();
+            break;
         case 'success':
             $('#create-room-success').show();
+            $('#alumns').val('');
+            $('#teacher').val('');
+            $('#room-name').val('');
+            $('#loaded-alumns').empty();
+
             break;
         case '500':
             $('#create-room-error').html('Error en el servidor');
@@ -40,7 +53,7 @@ function crHandler(code){
 
 
 
-function validate(room, teacher){
+function validate(room, teacher, cb){
     if(room.length < 6) {
         crHandler('room-short');
         return 0;
@@ -49,7 +62,17 @@ function validate(room, teacher){
         crHandler('teacher-404');
         return 0;
     }
-    return 1;
+    $.ajax({
+        type: 'GET',
+        url: '/users/' + teacher +'?role=teacher',
+        error: function (res) {
+            crHandler('teacher-404');
+            return cb(0);
+        },
+        success: function (res) {
+            return cb(1);
+        },
+    });
 }
 
 $(document).ready(function() {
@@ -70,6 +93,8 @@ $(document).ready(function() {
     });
 
     $('#create-room-form').submit(function(e) {
+        $('#teacher-suggestion').hide();
+        $('#alumn-suggestion').hide();
         e.preventDefault();
         var a = [];
         var i = 0;
@@ -84,52 +109,81 @@ $(document).ready(function() {
         }
         var t = $('#teacher').val();
         var r = $('#room-name').val();
-        if(!validate(r,t)) return;
-        crHandler('xxx');
-        $.ajax({
-            type: 'POST',
-            url: '/rooms',
-            data: JSON.stringify({room_name: r, teacher: t, alumns: a}),
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Content-type", "application/json");
-            },
-            success: function (res) {
-                crHandler('success');
-            },
-            error: function (res) {
-                crHandler('500');
+        validate(r,t, function(c){
+            if(c){
+                crHandler('xxx');
+                $.ajax({
+                    type: 'POST',
+                    url: '/rooms',
+                    data: JSON.stringify({room_name: r, teacher: t, alumns: a}),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Content-type", "application/json");
+                    },
+                    success: function (res) {
+                        crHandler('success');
+                    },
+                    error: function (res) {
+                        if(res.status == 409) crHandler('room-exists');
+                    }
+                });
             }
         });
+
     });
 
     $('#add-alumn-cr').click(function() {
         var a = $('#alumns').val();
         if(a.length = 0) return;
-        $('#loaded-alumns').show();
-        var f = false;
-        $('#loaded-alumns li').each(function(){
-            if($(this).text() == a){
-                f = true;
+        $.ajax({
+            type: 'GET',
+            url: '/users/' + a + '?role=alumn',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Content-type", "application/json");
+            },
+            error: function (res) {
+                crHandler('alumn-404');
+            },
+            success: function (res) {
+                var f = false;
+                $('#loaded-alumns li').each(function(){
+                    if($(this).text() == a){
+                        f = true;
+                    }
+                });
+                if(f) return;
+                $('#loaded-alumns').show();
+                $('#loaded-alumns').append($('<li>', {text: a}));
+                $('#alumns').val('');
             }
         });
-        if(f) return;
-        $('#loaded-alumns').append($('<li>', {text: a}));
-        $('#alumns').val('');
-
     });
 
     $('#alumns').keydown(function(e){
         if(e.which == 13){
             var a = $('#alumns').val();
             if(a.length = 0) return;
-            $('#loaded-alumns').show();
-            $('#loaded-alumns li').each(function(e){
-                if(e.text() == a){
-                    return;
+            $.ajax({
+                type: 'GET',
+                url: '/users/' + a + '?role=alumn',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Content-type", "application/json");
+                },
+                error: function (res) {
+                    crHandler('alumn-404');
+                },
+                success: function (res) {
+                    var f = false;
+                    $('#loaded-alumns li').each(function(){
+                        if($(this).text() == a){
+                            f = true;
+                        }
+                    });
+                    if(f) return;
+                    $('#loaded-alumns').show();
+                    $('#loaded-alumns').append($('<li>', {text: a}));
+                    $('#alumns').val('');
                 }
             });
-            $('#loaded-alumns').append($('<li>', {text: a}));
-            $('#alumns').val('');
         }
     });
 

@@ -35,7 +35,7 @@ router.get('/', function(req, res, next){
         usersMgr.findByNameAndRole(req.query.pattern, req.query.role, function(err, list){
             if(!err){
                 console.log(list);
-                res.status('201').send(list).end();
+                res.status('200').send(list).end();
             }else{
                 next(err);
             }
@@ -47,10 +47,10 @@ router.get('/', function(req, res, next){
 });
 
 /* Check user exists */
-router.get('/:user', function(req, res, next){
+router.get('/:nick', function(req, res, next){
     if(req.session.role === 'planner') {
         if(req.query.role === 'teacher') {
-            usersMgr.isTeacher(req.query.nick, req.query.role, function (err) {
+            usersMgr.isTeacher(req.params.nick, '', function (err) {
                 if (!err) {
                     res.status('404').end();
                 } else {
@@ -63,7 +63,7 @@ router.get('/:user', function(req, res, next){
             });
         }
         if(req.query.role === 'alumn') {
-            usersMgr.isAlumn(req.query.nick, req.query.role, function (err) {
+            usersMgr.isAlumn(req.params.nick, '', function (err) {
                 if (!err) {
                     res.status('404').end();
                 } else {
@@ -75,7 +75,6 @@ router.get('/:user', function(req, res, next){
                 }
             });
         }
-        res.status('404').end();
     }else{
         //Unauthorized
         res.status('401').end();
