@@ -16,15 +16,16 @@ $(document).ready(function() {
 
     $('#rooms').click(function () {
         resetView();
-        
         $.ajax({
             type: 'GET',
             url: '/rooms',
-            success: function (a, e, jqXHR) {
-                j = JSON.parse(a);
-                for (var i = 0; i < j.length; i++) {
-                    //console.log(j[i]);
-                    $('#my-select').append($('<option>', {text: j[i]._id}));
+            success: function (list, e, jqXHR) {
+                console.log(list);
+                for (var i in list.rooms) {
+                    console.log(list.rooms[i]);
+                    $('#my-select').append($('<option>', {
+                        text: list.rooms[i].room_name, data_room: list.rooms[i].licode_room
+                    }));
                 }
             },
             error: function (a, e, jqXHR) {
@@ -34,7 +35,7 @@ $(document).ready(function() {
     });
 
     $('#enter-room').click(function(e){
-        var r = $("#my-select option:selected").text();
+        var r = $("#my-select option:selected").attr('data_room');
         console.log(r);
         $.ajax({
             type: 'POST',

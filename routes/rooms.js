@@ -28,17 +28,27 @@ router.post('/', function(req, res, next) {
     }, {p2p: true});
 });
 
-/* GET all rooms */
+/* GET rooms */
 router.get('/', function(req, res, next){
-    if(req.session.role === undefined){
-        res.status('401');
-        return;
+    switch (req.session.role){
+        case undefined:
+            res.status('401');
+            break;
+        case 'alumn':
+            usersMgr.findAlummnRooms(req.session.nick, function (err, list) {
+                if (err) return next(err);
+                res.status('200').send({rooms: list});
+            });
+            break;
+        case 'teacher':
+            usersMgr.findTeacherRooms(req.session.nick, function (err, list) {
+                if (err) return next(err);
+                res.status('200').send({rooms: list});
+            });
+            break;
+        default:
+            res.status('500');
     }
-    N.API.getRooms(function(roomList){
-        res.status('200').send(roomList).end();
-    }, function (err){
-        next(err)
-    });
 });
 
 /* Create token for joining room */

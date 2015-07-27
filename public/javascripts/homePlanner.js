@@ -185,6 +185,9 @@ $(document).ready(function() {
                 }
             });
         }
+        if(e.which == 40){
+            $('#alumn-suggestion li').first().focus();
+        }
     });
 
 
@@ -212,8 +215,9 @@ $(document).ready(function() {
         });
     });
 
+
     $('#alumns').keyup(function(e){
-        if(e.which == 13) return;
+        if(e.which == 13 || e.which == 40) return;
         var pattern = $('#alumns').val();
         $.ajax({
             type: 'GET',
