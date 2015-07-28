@@ -10,13 +10,85 @@ CREATE TABLE app_user
   email character varying(40) NOT NULL,
   recovery_token uuid,
   token_expiration integer,
-  CONSTRAINT pk_user PRIMARY KEY (nick )
+  user_id serial NOT NULL,
+  CONSTRAINT pk_user PRIMARY KEY (nick)
 )
 WITH (
   OIDS=FALSE
 );
 ALTER TABLE app_user
   OWNER TO tfg;
+
+-- Table: classroom
+
+-- DROP TABLE classroom;
+
+CREATE TABLE classroom
+(
+  room_name character varying(30) NOT NULL,
+  teacher character varying(30) NOT NULL,
+  licode_room character varying(50) NOT NULL,
+  CONSTRAINT classroom_pk PRIMARY KEY (room_name),
+  CONSTRAINT teacher_fk FOREIGN KEY (teacher)
+      REFERENCES app_user (nick) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT licoderoom_unique UNIQUE (licode_room)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE classroom
+  OWNER TO tfg;
+
+-- Index: fki_teacher_fk
+
+-- DROP INDEX fki_teacher_fk;
+
+CREATE INDEX fki_teacher_fk
+  ON classroom
+  USING btree
+  (teacher COLLATE pg_catalog."default");
+
+-- Table: asists
+
+-- DROP TABLE asists;
+
+CREATE TABLE asists
+(
+  alumn character varying NOT NULL,
+  classroom character varying(30) NOT NULL,
+  CONSTRAINT asist_pk PRIMARY KEY (alumn, classroom),
+  CONSTRAINT alumn_fk FOREIGN KEY (alumn)
+      REFERENCES app_user (nick) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT classromm_fk FOREIGN KEY (classroom)
+      REFERENCES classroom (room_name) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE asists
+  OWNER TO tfg;
+
+-- Index: fki_alumn_fk
+
+-- DROP INDEX fki_alumn_fk;
+
+CREATE INDEX fki_alumn_fk
+  ON asists
+  USING btree
+  (alumn COLLATE pg_catalog."default");
+
+-- Index: fki_classromm_fk
+
+-- DROP INDEX fki_classromm_fk;
+
+CREATE INDEX fki_classromm_fk
+  ON asists
+  USING btree
+  (classroom COLLATE pg_catalog."default");
+
 
 --Add admin user with PASSWORD = '1234'
 INSERT INTO app_user(nick, hash, role, email)

@@ -24,7 +24,7 @@
             <a href="#">Salas</a>
             <ul class="drop-nav">
                 <li id="create-room-show"><a href="#">Crear</a></li>
-                <li id="delete-room"><a href="#">Eliminar</a></li>
+                <li id="delete-room-show"><a href="#">Eliminar</a></li>
             </ul>
         </li>
         <li><a href="#">Contact</a></li>
@@ -37,19 +37,20 @@
 
     <form id="create-room-form">
         <input id="room-name" type="text" name="room-name" placeholder="Nombre" autocomplete="off">
-        <input id="teacher" type="text" name="teacher" placeholder="Profesor" autocomplete="off">
-        <input id="alumns" type="text" name="alumns" placeholder="Alumnos" autocomplete="off">
+        <input class="teacher" type="text" name="teacher" placeholder="Profesor" autocomplete="off" list="teacher-suggestion">
+        <input class="alumns" type="text" name="alumns" placeholder="Alumnos" autocomplete="off" list="alumn-suggestion">
         <input type="submit" class="create-room create-room-submit" value="Crear">
     </form>
-    <button id="load-csv">Importar</button>
+    <input type="file" id="file-input" onchange="fileHandler(this.files)">
+
 
     <button id="add-alumn-cr">+</button>
 
-    <ul id="teacher-suggestion" class="teacher-suggestion-list-cr">
-    </ul>
+    <datalist id="teacher-suggestion">
+    </datalist>
 
-    <ul id="alumn-suggestion" class="alumn-suggestion-list-cr">
-    </ul>
+    <datalist id="alumn-suggestion">
+    </datalist>
 
     <ul id="loaded-alumns" class="loaded-alumn-list">
     </ul>
@@ -57,6 +58,15 @@
     <div id="create-room-success" class="create-room-help">Sala creada con éxito</div>
     <div id="create-room-loading"><img src="/images/loader.gif"/></div>
     <div id="create-room-error" class="create-room-help">Ya existe otro usuario con ese correo</div>
+
 </div>
+
+<div id="delete-room-selector">
+    <h1>Lista de salas</h1><br>
+    <select id="delete-room-select" size="10">
+    </select>
+    <button id="delete-room" type="button">Delete Room</button>
+</div>
+
 </body>
 </html>

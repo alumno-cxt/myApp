@@ -1,5 +1,5 @@
 function resetView(){
-    $('#salas').hide();
+    $('#room-selector').hide();
 }
 
 $(document).ready(function() {
@@ -16,6 +16,7 @@ $(document).ready(function() {
 
     $('#rooms').click(function () {
         resetView();
+        $('#room-selector').show();
         $.ajax({
             type: 'GET',
             url: '/rooms',
