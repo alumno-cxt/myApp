@@ -6,22 +6,42 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+div{
+    display: inline-block;
+}
+
 #video-teacher {
     position: absolute;
     top: 20px;
     right: 20px;
     background-color: #710c47;
-	height: 301px;
-	width: 404px;
+	height: 226px;
+	width: 362px;
+}
+
+#screen-teacher{
+    position: absolute;
+    background: green;
+    width: 800px;
+    height: 500px;
+    top: 20px;
+    left: 1%
+}
+#screen-teacher button {
+    z-index: 999;
+    top: 258px;
+    left: 330px;
+    float: left;
+    position: relative;
 }
 
 #video-alumn{
     position: absolute;
     background: green;
-    width: 50%;
-    height: 50%;
+    width: 98%;
+    height: 25%;
     left: 10px;
-    top: 400px;
+    top: 528px;
 }
 
 #video-alumn div{
@@ -33,13 +53,16 @@ body {
 
 #wrapper {
     position: absolute;
-    top: 321px;
-    right: 20px;
-    margin:0 auto;
-    padding-bottom:25px;
-    background:#EBF4FB;
-    width:504px;
-    border:1px solid #ACD8F0; }
+    top: 246px;
+    right: -751px;
+    margin: 0px auto;
+    padding-bottom: 25px;
+    background: #EBF4FB none repeat scroll 0% 0%;
+    border: 1px solid #ACD8F0;
+    width: 29.9%;
+    height: 38%;
+    left: 4%;
+}
 
 #wrapper form {
     margin-left: 25px;
@@ -49,26 +72,33 @@ body {
   
 
 #chatbox {
-    text-align:left;
-    margin:25px auto;
-    margin-bottom:25px;
-    padding:10px;
-    background:#fff;
-    height:200px;
-    width:430px;
-    border:1px solid #ACD8F0;
-    overflow:auto; }
+    text-align: left;
+    margin: 6px auto;
+    padding: 10px;
+    background: #FFF none repeat scroll 0% 0%;
+    border: 1px solid #ACD8F0;
+    overflow: auto;
+    width: 86%;
+    height: 82%;
+    position: relative;
+    left: 14px;
+    top: 3px;
+}
 
 #chatbox div{
     word-wrap: break-word;
-    max-height: 100%;
+    max-height: 0%;
 	min-height: 15px;
+    width: 100%;
 	font: 12px arial;
 }
   
 #usermsg {
-    width:395px;
-    border:1px solid #ACD8F0; }
+    border: 1px solid #ACD8F0;
+    width: 84%;
+    margin-right: 1%;
+    margin-left: -5%;
+}
   
 #submit { width: 60px; }
   

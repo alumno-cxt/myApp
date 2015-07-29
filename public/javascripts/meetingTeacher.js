@@ -1,18 +1,29 @@
-var localStream;
-var conn = 0;
 $(document).ready(function(){
     //token is stored in <meta> tag at the html page
     var tokenJ = $('meta[name=token]').attr("content");
     var nick = $('meta[name=nick]').attr("content");
 
-    //localStream = Erizo.Stream({screen: true});
-    localStream = Erizo.Stream({video:true, audio: false, data:true, videoSize:[240, 180, 240, 180],
-        attributes:{nick: nick, role: 'teacher'}});
+    var conn = 0;
+    var room = Erizo.Room({token: tokenJ});
+
+    var screenStream = Erizo.Stream({screen: true, videoSize:[1600, 1000, 960, 600], attributes:{nick: nick, role: 'teacher', media: 'screen'}});
+    var localStream = Erizo.Stream({video:true, audio: false, data:true, videoSize:[1600, 1000, 960, 600],
+        attributes:{nick: nick, role: 'teacher', type: 'video'}});
     localStream.init();
     localStream.addEventListener('access-accepted', function(ev) {
-        console.log('access granted');
-        if(conn)room.publish(localStream, {maxVideoBW: 300});
+        console.log('access granted to video');
+        if(conn) room.publish(localStream, {maxVideoBW: 500});
         localStream.play('video-teacher');
+    });
+
+    screenStream.addEventListener('access-accepted', function(ev) {
+        console.log('access granted to screen');
+        if(conn) room.publish(screenStream, {maxVideoBW: 500});
+        screenStream.play('screen-teacher');
+    });
+
+    $('#share-screen').click(function(e){
+        screenStream.init();
     });
 
     $('#message').submit(function(e){
@@ -34,7 +45,7 @@ $(document).ready(function(){
     var subscribeToStreams = function (streams) {
         for (var index in streams) {
             var stream = streams[index];
-            if (localStream.getID() !== stream.getID()) {
+            if (localStream.getID() !== stream.getID() && screenStream.getID() !== stream.getID()) {
                 room.subscribe(stream);
             }
         }
@@ -64,8 +75,6 @@ $(document).ready(function(){
         streams.push(streamEvent.stream);
         subscribeToStreams(streams);
     });
-
-
 
     room.addEventListener("stream-removed", function (streamEvent) {
         // Remove stream from DOM

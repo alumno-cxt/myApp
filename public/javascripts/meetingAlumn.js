@@ -5,9 +5,11 @@ $(document).ready(function(){
     //token is stored in <meta> tag at the html page
     var tokenJ = $('meta[name=token]').attr("content");
     var nick = $('meta[name=nick]').attr("content");
-    var room;
 
-    localStream = Erizo.Stream({video: true, audio: false, data:true, videoSize:[240, 180, 240, 180],
+    var conn = 0;
+    var room = Erizo.Room({token: tokenJ});
+
+    var localStream = Erizo.Stream({video: true, audio: false, data:true, videoSize:[240, 180, 240, 180],
         attributes:{nick: nick, role: 'alumn'}});
     localStream.init();
     localStream.addEventListener('access-accepted', function() {
@@ -30,8 +32,6 @@ $(document).ready(function(){
         }
     });
 
-    room = Erizo.Room({token: tokenJ});
-
     var subscribeToStreams = function (streams) {
         for (var index in streams) {
             var stream = streams[index];
@@ -51,14 +51,19 @@ $(document).ready(function(){
     room.addEventListener("stream-subscribed", function(streamEvent) {
         console.log('stream subscribed');
         var stream = streamEvent.stream;
-        console.log(stream.getID());
         var attributes = stream.getAttributes();
+        console.log(attributes);
         stream.addEventListener("stream-data", function(evt){
             var $c = $('#chatbox').append($('<div>'));
             $c.find('div').last().html('<p><b>' + evt.msg.nick + ': </b>' + evt.msg.text + '</p>');
         });
         if(attributes.role == 'teacher'){
-            stream.show('video-teacher');
+            if(attributes.media == 'screen'){
+                stream.show('screen-teacher')
+            }
+            else{
+                stream.show('video-teacher');
+            }
         }else {
             $('#video-alumn').append($('<div>').attr('id', stream.getID().toString()));
             stream.show(stream.getID().toString());
