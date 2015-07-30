@@ -6,26 +6,43 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-div{
+#share-screen{
+    position: absolute;
+    z-index: 999;
+    top: 50%;
+    left: 30%;
+}
+
+#main{
+    position: relative;
+    width: 100%;
+    height: 100%;
     display: inline-block;
 }
 
+#d-right{
+    height: 100%;
+    width: 36%;
+    float: right;
+    margin-top: 10px;
+}
+
 #video-teacher {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #710c47;
-	height: 226px;
-	width: 362px;
+    border: 15px solid grey;
+    /*border-radius: 10px;*/
+    position: relative;
+    background-color: #710C47;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 10px;
 }
 
 #screen-teacher{
-    position: absolute;
-    background: green;
-    width: 800px;
-    height: 500px;
-    top: 20px;
-    left: 1%
+    position: relative;
+    background: #008000 none repeat scroll 0% 0%;
+    width: 63%;
+    height: 444px;
+    margin-top: 10px;
 }
 #screen-teacher button {
     z-index: 999;
@@ -36,68 +53,59 @@ div{
 }
 
 #video-alumn{
-    position: absolute;
-    background: green;
-    width: 98%;
-    height: 25%;
-    left: 10px;
-    top: 528px;
+    background: #008000 none repeat scroll 0% 0%;
+    width: 100%;
+    position: relative;
+    height: 76px;
+    float: left;
+    margin-top: 10px;
 }
 
 #video-alumn div{
     background: red;
     display: inline-block;
-    width: 25%;
+    width: 10%;
     height: 50%;
 }
 
 #wrapper {
-    position: absolute;
-    top: 246px;
-    right: -751px;
-    margin: 0px auto;
-    padding-bottom: 25px;
+    position: relative;
     background: #EBF4FB none repeat scroll 0% 0%;
     border: 1px solid #ACD8F0;
-    width: 29.9%;
-    height: 38%;
-    left: 4%;
+    width: 100%;
+    height: 231px;
 }
 
 #wrapper form {
-    margin-left: 25px;
+    margin-left: 10px;
     padding:0; }
   
-#wrapper input { font:12px arial; }
+#wrapper input {
+    font: 12px arial;
+    margin: 0px 1px 5px;}
   
 
 #chatbox {
-    text-align: left;
-    margin: 6px auto;
-    padding: 10px;
-    background: #FFF none repeat scroll 0% 0%;
     border: 1px solid #ACD8F0;
-    overflow: auto;
-    width: 86%;
-    height: 82%;
     position: relative;
-    left: 14px;
-    top: 3px;
+    background: #FFF none repeat scroll 0% 0%;
+    text-align: left;
+    padding: 10px;
+    margin: 10px;
+    overflow: auto;
+    height: 69%;
 }
 
 #chatbox div{
     word-wrap: break-word;
-    max-height: 0%;
-	min-height: 15px;
-    width: 100%;
-	font: 12px arial;
+    font: 12px arial;
+    max-height: 100%;
 }
   
 #usermsg {
     border: 1px solid #ACD8F0;
-    width: 84%;
-    margin-right: 1%;
-    margin-left: -5%;
+    max-height: 15px;
+    width: 77%;
 }
   
 #submit { width: 60px; }

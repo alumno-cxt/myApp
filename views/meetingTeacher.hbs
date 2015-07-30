@@ -2,6 +2,8 @@
 <head>
     <title>Log-in</title>
     <meta charset="UTF-8">
+    <meta name="token" content="{{token}}">
+    <meta name="nick" content="{{nick}}">
     <script src='/javascripts/external/jquery-1.11.3.min.js'></script>
     <script src='/javascripts/meetingTeacher.js'></script>
     <script src='/javascripts/external/erizo.js'></script>
@@ -10,20 +12,19 @@
 
 
 <body>
-    <meta name="token" content="{{token}}">
-    <meta name="nick" content="{{nick}}">
-    <div id="wrapper">
-        <div id="chatbox"></div>
-        <form id="message">
-            <input name="usermsg" type="text" id="usermsg" size="63" />
-            <input name="submitmsg" type="submit"  id="submitmsg" value="Send" />
-        </form>
+    <div id="main">
+        <div id="d-right">
+            <div id='video-teacher'></div>
+            <div id="wrapper">
+                <div id="chatbox"></div>
+                <form id="message">
+                    <input name="usermsg" type="text" id="usermsg" size="63" />
+                    <input name="submitmsg" type="submit"  id="submitmsg" value="Send" />
+                </form>
+            </div>
+        </div>
+        <div id='video-alumn'></div>
+        <div id="screen-teacher"></div>
+        <button id="share-screen">Share</button>
     </div>
-
-    <div id='video-teacher'></div>
-    <div id='video-alumn'></div>
-    <div id="screen-teacher">
-            <button id="share-screen">Compartir</button>
-    </div>
-
 </body>
