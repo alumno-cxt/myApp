@@ -14,17 +14,17 @@
     <a class="logo" href="#"></a>
     <ul class="main-nav">
         <li class="dropdown">
-            <a href="#">Bienvenido</a>
+            <a href="#">Welcome</a>
             <ul class="drop-nav">
-                <li><a href="#">Datos personales</a></li>
-                <li id="log-out"><a href="#">Cerrar sesión</a></li>
+                <li><a href="#">Personal data</a></li>
+                <li id="log-out"><a href="#">Log out</a></li>
             </ul>
         </li>
         <li class="dropdown">
-            <a href="#">Clases</a>
+            <a href="#">Rooms</a>
             <ul class="drop-nav">
-                <li id="register-show"><a href="#">Crear</a></li>
-                <li><a href="#">Añadir alumnos</a></li>
+                <li id="register-show"><a href="#">Create</a></li>
+                <li><a href="#">Add alumns</a></li>
             </ul>
         </li>
         <li><a href="#">Contact</a></li>
@@ -33,23 +33,23 @@
 
 <div id="register" class="register-card">
 
-    <h1>Registrar Usuario</h1><br>
+    <h1>Register User</h1><br>
 
     <form id="register-form">
         <input id="nick" type="text" name="nick" placeholder="Username">
         <input id="email" type="text" name="email" placeholder="e-mail">
         <input id="pass" type="password" name="pass" placeholder="Password">
         <div class="radio-role">
-            <input type="radio" name="role" value="alumn" checked>Alumno
-            <input type="radio" name="role" value="teacher">Profesor
-            <input type="radio" name="role" value="planner">Jefe
+            <input type="radio" name="role" value="alumn" checked>Alumn
+            <input type="radio" name="role" value="teacher">Professor
+            <input type="radio" name="role" value="planner">Planner
         </div>
-        <input type="submit" class="register register-submit" value="Registrar">
+        <input type="submit" class="register register-submit" value="Register">
     </form>
 
-    <div id="register-success" class="register-help">Usuario dado de alta con éxito</div>
+    <div id="register-success" class="register-help">User successfuly added</div>
     <div id="register-loading"><img src="/images/loader.gif"/></div>
-    <div id="register-error" class="register-help">Ya esxiste otro usuario con ese correo</div>
+    <div id="register-error" class="register-help">Another user is registered with the same email</div>
 </div>
 </body>
 </html>

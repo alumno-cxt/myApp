@@ -9,32 +9,27 @@ function crHandler(code){
     switch (code) {
         case 'room-short':
             $('#room-name').css('borderColor','red');
-            $('#create-room-error').html('El nombre de la sala debe tener más de 6 letras');
+            $('#create-room-error').html('Room name length must be longer than 6 characters');
             $('#create-room-error').show();
             break;
         case 'teacher-404':
             $('.teacher').css('borderColor','red');
-            $('#create-room-error').html('El nombre del profesor no existe');
+            $('#create-room-error').html('Unknown teacher');
             $('#create-room-error').show();
             break;
         case 'alumns-void':
             $('#loaded-alumn').css('borderColor','red');
-            $('#create-room-error').html('No hay alumnos en la lista');
+            $('#create-room-error').html('Void alumn list');
             $('#create-room-error').show();
             break;
         case 'alumn-404':
             $('.alumns').css('borderColor','red');
-            $('#create-room-error').html('El nombre del alumno no existe');
+            $('#create-room-error').html('Unknown alumn');
             $('#create-room-error').show();
             break;
         case 'room-exists':
             $('#room-name').css('borderColor','red');
-            $('#create-room-error').html('El nombre de la sala ya existe');
-            $('#create-room-error').show();
-            break;
-        case 'alumn-404':
-            $('.alumns').css('borderColor','red');
-            $('#create-room-error').html('El nombre del alumno no existe');
+            $('#create-room-error').html('Room name already exists');
             $('#create-room-error').show();
             break;
         case 'success':
@@ -45,11 +40,11 @@ function crHandler(code){
             $('#loaded-alumns').empty();
             break;
         case 'excess':
-            $('#create-room-error').html('No se permiten más de 20 alumnos por clase');
+            $('#create-room-error').html('No more than 20 alumns per room allowed');
             $('#create-room-error').show();
             break;
         case '500':
-            $('#create-room-error').html('Error en el servidor');
+            $('#create-room-error').html('Internal server error, try it later');
             $('#create-room-error').show();
             break;
     }

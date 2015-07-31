@@ -1,6 +1,3 @@
-var localStream;
-var conn = 0;
-
 $(document).ready(function(){
     //token is stored in <meta> tag at the html page
     var tokenJ = $('meta[name=token]').attr("content");

@@ -3,27 +3,63 @@ $(document).ready(function(){
     var tokenJ = $('meta[name=token]').attr("content");
     var nick = $('meta[name=nick]').attr("content");
 
-    var conn = 0;
+    var recording = false;
+    var sharing = false;
     var room = Erizo.Room({token: tokenJ});
 
     var screenStream = Erizo.Stream({screen: true, videoSize:[1600, 1000, 960, 600], attributes:{nick: nick, role: 'teacher', media: 'screen'}});
     var localStream = Erizo.Stream({video:true, audio: false, data:true, videoSize:[1600, 1000, 960, 600],
         attributes:{nick: nick, role: 'teacher', type: 'video'}});
-    localStream.init();
+
     localStream.addEventListener('access-accepted', function(ev) {
         console.log('access granted to video');
-        if(conn) room.publish(localStream, {maxVideoBW: 500});
+        room.publish(localStream, {maxVideoBW: 500});
         localStream.play('video-teacher');
     });
 
     screenStream.addEventListener('access-accepted', function(ev) {
         console.log('access granted to screen');
-        if(conn) room.publish(screenStream, {maxVideoBW: 500});
+        room.publish(screenStream, {maxVideoBW: 500});
+        sharing = true;
         screenStream.play('screen-teacher');
     });
 
     $('#share-screen').click(function(e){
-        screenStream.init();
+        if(sharing) {
+            $('#screen-teacher').empty();
+            sharing = false;
+        }else{
+            screenStream.init();
+        }
+    });
+
+    $('#start-rec').click(function(){
+        if(recording){
+            room.stopRecording(localStream, function(result, error){
+                if (result === undefined){
+                    console.log("Error", error);
+                } else {
+                    console.log("Stopped recording!");
+                    recording = false;
+                }
+            });
+        }else {
+            room.startRecording(localStream, function (recordingId, error) {
+                if (recordingId === undefined) {
+                    console.log("Error", error);
+                } else {
+                    console.log("Recording started, the id of the recording is ", recordingId);
+                    recording = true;
+                }
+            });
+        }
+       /* room.startRecording(screenStream, function(recordingId, error) {
+            if (recordingId === undefined){
+                console.log("Error", error);
+            } else {
+                console.log("Recording started, the id of the recording is ", recordingId);
+            }
+        });*/
     });
 
     $('#message').submit(function(e){
@@ -52,7 +88,7 @@ $(document).ready(function(){
     };
 
     room.addEventListener("room-connected", function (roomEvent) {
-        conn=1;
+        localStream.init();
         console.log('in the room');
         console.log(localStream.hasData());
         subscribeToStreams(roomEvent.streams);

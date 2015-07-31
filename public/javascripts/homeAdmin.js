@@ -75,27 +75,27 @@ function registerHandler(code){
         	break;
         case 'email': 
         	$('#register input#email').css('borderColor','red');
-        	$('#register-error').html('El formato del email no es válido');
+        	$('#register-error').html('Invalid email format');
             $('#register-error').show();
         	break;
         case 'short-nick': 
         	$('#register input#nick').css('borderColor','red');
-        	$('#register-error').html('El nombre de usuario debe tener entre 6 y 14 caracteres');
+        	$('#register-error').html('Username length must be between 6 and 14 characters');
             $('#register-error').show();
         	break;
         case 'short-pass': 
         	$('#register input#pass').css('borderColor','red');
-        	$('#register-error').html('La contraseña debe tener entre 8 y 25 caracteres');
+        	$('#register-error').html('Password length must be between 8 and 25 characters');
             $('#register-error').show();
         	break;
         case 'nick':
         	$('#register input#nick').css('borderColor','');
-    	    $('#register-error').html('El nombre de usuario solo puede contener letras en minúscula, números y "_" ');
+    	    $('#register-error').html('Username can only contain lower case letters, numbers and "_"');
             $('#register-error').show();
         	break;
         case 'pass':
         	$('#register input#pass').css('borderColor','');
- 			$('#register-error').html('La contraseña debe tener al menos un número y una mayúscula');
+ 			$('#register-error').html('Password must contain at least a number and a uppercase letter');
             $('#register-error').show();
             break;
         case 'success':
@@ -110,12 +110,12 @@ function registerHandler(code){
             $('#register input#nick').first().focus();
             break;
         case '500':
-        	$('#register-error').html('Error en el servidor');
+        	$('#register-error').html('Server, error try later');
             $('#register-error').show();
         	break;
         case 'duplicate':
         	$('#register input#nick').css('borderColor','red');
-            $('#register-error').html('Ya existe otro usuario con ese nombre');
+            $('#register-error').html('Another user already exists with that name');
             $('#register-error').show();
             break;
     }

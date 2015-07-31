@@ -14,17 +14,17 @@
     <a class="logo" href="#"></a>
     <ul class="main-nav">
         <li class="dropdown">
-            <a href="#">Bienvenido</a>
+            <a href="#">Welcome</a>
             <ul class="drop-nav">
-                <li><a href="#">Datos personales</a></li>
-                <li id="log-out"><a href="#">Cerrar sesión</a></li>
+                <li><a href="#">Personal data</a></li>
+                <li id="log-out"><a href="#">Log out</a></li>
             </ul>
         </li>
         <li class="dropdown">
-            <a href="#">Salas</a>
+            <a href="#">Rooms</a>
             <ul class="drop-nav">
-                <li id="create-room-show"><a href="#">Crear</a></li>
-                <li id="delete-room-show"><a href="#">Eliminar</a></li>
+                <li id="create-room-show"><a href="#">Create</a></li>
+                <li id="delete-room-show"><a href="#">Eliminate</a></li>
             </ul>
         </li>
         <li><a href="#">Contact</a></li>
@@ -33,13 +33,13 @@
 
 <div id="create-room" class="create-room-card">
 
-    <h1>Crear sala</h1><br>
+    <h1>Create room</h1><br>
 
     <form id="create-room-form">
-        <input id="room-name" type="text" name="room-name" placeholder="Nombre" autocomplete="off">
-        <input class="teacher" type="text" name="teacher" placeholder="Profesor" autocomplete="off" list="teacher-suggestion">
-        <input class="alumns" type="text" name="alumns" placeholder="Alumnos" autocomplete="off" list="alumn-suggestion">
-        <input type="submit" class="create-room create-room-submit" value="Crear">
+        <input id="room-name" type="text" name="room-name" placeholder="Nname" autocomplete="off">
+        <input class="teacher" type="text" name="teacher" placeholder="Professor" autocomplete="off" list="teacher-suggestion">
+        <input class="alumns" type="text" name="alumns" placeholder="Alumns" autocomplete="off" list="alumn-suggestion">
+        <input type="submit" class="create-room create-room-submit" value="Create">
     </form>
     <input type="file" id="file-input" onchange="fileHandler(this.files)">
 
@@ -55,14 +55,14 @@
     <ul id="loaded-alumns" class="loaded-alumn-list">
     </ul>
 
-    <div id="create-room-success" class="create-room-help">Sala creada con éxito</div>
+    <div id="create-room-success" class="create-room-help">Room successfully created</div>
     <div id="create-room-loading"><img src="/images/loader.gif"/></div>
-    <div id="create-room-error" class="create-room-help">Ya existe otro usuario con ese correo</div>
+    <div id="create-room-error" class="create-room-help">Another room exists with the same name</div>
 
 </div>
 
 <div id="delete-room-selector">
-    <h1>Lista de salas</h1><br>
+    <h1>Room list</h1><br>
     <select id="delete-room-select" size="10">
     </select>
     <button id="delete-room" type="button">Delete Room</button>

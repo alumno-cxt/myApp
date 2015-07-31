@@ -7,15 +7,15 @@ $(document).ready(function(){
             url: '/',
             data: formData,
             success: function(){
-            	console.log('success login');
+            	console.log('login success');
                 window.location='/home';
             },
             error: function(res){
                 $('#login-error').show();
                 if(res.status == 500) {
-                    $('#login-error').html('Error en el servidor');
+                    $('#login-error').html('Server error, try it again later');
                 }else{
-                    $('#login-error').html('Los datos introducidos son incorrectos');
+                    $('#login-error').html('Either username or password is incorrect');
                 }
             }
         });

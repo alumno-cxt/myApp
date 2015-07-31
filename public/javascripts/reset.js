@@ -8,7 +8,6 @@ $(document).ready(function(){
             url: '/reset',
             data: formData,
             success: function(){
-            	console.log('hola');
             	window.location='/home'
             },
             error: function(){

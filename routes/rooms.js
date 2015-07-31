@@ -25,7 +25,7 @@ router.post('/', function(req, res, next) {
     }, function (err) {
         console.log(err);
         next(err)
-    }, {p2p: true});
+    });
 });
 
 /* Delete room */
