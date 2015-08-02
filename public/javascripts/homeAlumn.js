@@ -1,6 +1,6 @@
 function resetView(){
     $('#room-selector').hide();
-    $('#show-update').hide();
+    $('#update').hide();
 }
 
 
@@ -136,7 +136,7 @@ $(document).ready(function() {
                     url: '/rooms/' + list.rooms[3].licode_room + '/createToken',
                     success: function (a, e, jqXHR) {
                         var room = Erizo.Room({token: a});
-                        var stream = Erizo.Stream({video: true, recording:"638682178687304300"});
+                        var stream = Erizo.Stream({video: true, audio:false, url:"file:///home/alex/tmp/566792063182219840.webm"});
                         var subscribeToStreams = function (streams) {
                             for (var index in streams) {
                                 var stream = streams[index];

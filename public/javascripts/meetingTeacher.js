@@ -5,6 +5,7 @@ $(document).ready(function(){
 
     var recording = false;
     var sharing = false;
+    var recId;
     var room = Erizo.Room({token: tokenJ});
 
     var screenStream = Erizo.Stream({screen: true, videoSize:[1600, 1000, 960, 600], attributes:{nick: nick, role: 'teacher', media: 'screen'}});
@@ -35,7 +36,7 @@ $(document).ready(function(){
 
     $('#start-rec').click(function(){
         if(recording){
-            room.stopRecording(localStream, function(result, error){
+            room.stopRecording(recId, function(result, error){
                 if (result === undefined){
                     console.log("Error", error);
                 } else {
@@ -49,6 +50,7 @@ $(document).ready(function(){
                     console.log("Error", error);
                 } else {
                     console.log("Recording started, the id of the recording is ", recordingId);
+                    recId = recordingId;
                     recording = true;
                 }
             });

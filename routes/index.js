@@ -1,11 +1,13 @@
+var fs = require('fs');
 var usersMgr = require('../lib/usersManager');
 var express = require('express');
 var router = express.Router();
 
+
 /* Define opts for sending files */
 var resFileOpts = {
     root: './views/'
-}
+};
 
 /* GET login page OR attemp automatic log-in */
 router.get('/', function(req, res){
@@ -31,7 +33,7 @@ router.post('/', function(req, res, next){
 });
 
 /* End session */
-router.delete('/', function(req, res, next){
+router.delete('/', function(req, res){
     req.session.destroy();
     res.status('200').end();
 });
@@ -96,21 +98,43 @@ router.get('/reset', function (req, res, next) {
             req.session.nick = u.nick;
             req.session.role = u.role;
             req.session.email = u.email;
-            res.sendFile('reset.html',resFileOpts);
-        }
-    });
-
-});
-
-router.post('/reset', function (req, res, next) {
-    usersMgr.resetPassword(req.session.email, req.body.pass, function(err){
-        if(err){
-            res.status('400').end();
-        }else{
-            res.status('200').end();
+            res.redirect('/home');
         }
     });
 });
 
+
+router.get('/videos', function (req, res) {
+    res.writeHead(200, {"Content-Type": "text/html"});
+    res.end('<video src="/videos/sample" controls></video>');
+});
+
+router.get('/videos/:id', function (req, res, next) {
+    var file = '/home/alex/tmp/566792063182219840.webm';
+    var range = req.headers.range;
+    var positions = range.replace(/bytes=/, "").split("-");
+    var start = parseInt(positions[0], 10);
+
+    fs.stat(file, function (err, stats) {
+        var total = stats.size;
+        var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
+        var chunksize = (end - start) + 1;
+
+        res.writeHead(206, {
+            "Content-Range": "bytes " + start + "-" + end + "/" + total,
+            "Accept-Ranges": "bytes",
+            "Content-Length": chunksize,
+            "Content-Type": "video/webm"
+        });
+
+        var stream = fs.createReadStream(file, {start: start, end: end})
+            .on("open", function () {
+                stream.pipe(res);
+            })
+            .on("error", function (err) {
+                next(err);
+            });
+    });
+});
 
 module.exports = router;

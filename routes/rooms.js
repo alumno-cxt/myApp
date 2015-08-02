@@ -11,7 +11,7 @@ router.post('/', function(req, res, next) {
     }
     N.API.createRoom(req.body.room_name, function (room) {
         var data = {room_name: req.body.room_name, teacher: req.body.teacher,
-            alumns: req.body.alumns ,licode_room: room._id}
+            alumns: req.body.alumns ,licode_room: room._id};
         usersMgr.createRoom(data, function(err){
             if(err){
                 N.API.deleteRoom(room._id, function(){
@@ -73,13 +73,14 @@ router.get('/', function(req, res, next){
                 if (err) return next(err);
                 res.status('200').send({rooms: list});
             });
+            break;
         default:
             res.status('500');
     }
 });
 
 /* Create token for joining room */
-router.post('/:room/createToken/', function(req, res, next) {
+router.post('/:room/createToken/', function(req, res) {
     var room = req.params.room;
     N.API.createToken(room, 'user', 'presenter', function(token) {
         req.session.token = token;
