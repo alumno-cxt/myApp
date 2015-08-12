@@ -2,30 +2,32 @@ $(document).ready(function(){
     //token is stored in <meta> tag at the html page
     var tokenJ = $('meta[name=token]').attr("content");
     var nick = $('meta[name=nick]').attr("content");
+    var room_name = $('meta[name=nick]').attr("content");
 
     var recording = false;
     var sharing = false;
-    var recId;
+    var recIdTeacher;
+    var recIdScreen;
     var room = Erizo.Room({token: tokenJ});
 
     var screenStream = Erizo.Stream({screen: true, videoSize:[1600, 1000, 960, 600], attributes:{nick: nick, role: 'teacher', media: 'screen'}});
     var localStream = Erizo.Stream({video:true, audio: false, data:true, videoSize:[1600, 1000, 960, 600],
         attributes:{nick: nick, role: 'teacher', type: 'video'}});
 
-    localStream.addEventListener('access-accepted', function(ev) {
+    localStream.addEventListener('access-accepted', function() {
         console.log('access granted to video');
         room.publish(localStream, {maxVideoBW: 500});
         localStream.play('video-teacher');
     });
 
-    screenStream.addEventListener('access-accepted', function(ev) {
+    screenStream.addEventListener('access-accepted', function() {
         console.log('access granted to screen');
         room.publish(screenStream, {maxVideoBW: 500});
         sharing = true;
         screenStream.play('screen-teacher');
     });
 
-    $('#share-screen').click(function(e){
+    $('#share-screen').click(function(){
         if(sharing) {
             $('#screen-teacher').empty();
             sharing = false;
@@ -36,12 +38,29 @@ $(document).ready(function(){
 
     $('#start-rec').click(function(){
         if(recording){
-            room.stopRecording(recId, function(result, error){
+            room.stopRecording(recIdTeacher, function(result, error){
                 if (result === undefined){
                     console.log("Error", error);
                 } else {
                     console.log("Stopped recording!");
                     recording = false;
+                }
+            });
+            room.stopRecording(recIdScreen, function(result, error){
+                if (result === undefined){
+                    console.log("Error", error);
+                } else {
+                    console.log("Stopped recording!");
+                    recording = false;
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/video?room='+room_name+'&idTeacher='+recIdTeacher+'&idScreen='+recIdScreen,
+                error: function (res) {
+                },
+                success: function (res){
+                    console.log('video successfully created');
                 }
             });
         }else {
@@ -50,18 +69,20 @@ $(document).ready(function(){
                     console.log("Error", error);
                 } else {
                     console.log("Recording started, the id of the recording is ", recordingId);
-                    recId = recordingId;
+                    recIdTeacher = recordingId;
+                    recording = true;
+                }
+            });
+            room.startRecording(screenStream, function (recordingId, error) {
+                if (recordingId === undefined) {
+                    console.log("Error", error);
+                } else {
+                    console.log("Recording started, the id of the recording is ", recordingId);
+                    recIdScreen = recordingId;
                     recording = true;
                 }
             });
         }
-       /* room.startRecording(screenStream, function(recordingId, error) {
-            if (recordingId === undefined){
-                console.log("Error", error);
-            } else {
-                console.log("Recording started, the id of the recording is ", recordingId);
-            }
-        });*/
     });
 
     $('#message').submit(function(e){
@@ -81,7 +102,7 @@ $(document).ready(function(){
 
     room = Erizo.Room({token: tokenJ});
     var subscribeToStreams = function (streams) {
-        for (var index in streams) {
+        for (var i = 0; i < streams.length; i++) {
             var stream = streams[index];
             if (localStream.getID() !== stream.getID() && screenStream.getID() !== stream.getID()) {
                 room.subscribe(stream);
@@ -122,7 +143,7 @@ $(document).ready(function(){
         }
     });
 
-    room.addEventListener("stream-failed", function (streamEvent){
+    room.addEventListener("stream-failed", function (){
         console.log("STREAM FAILED, DISCONNECTION");
         room.disconnect();
 

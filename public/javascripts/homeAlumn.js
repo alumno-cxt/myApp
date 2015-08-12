@@ -129,47 +129,24 @@ $(document).ready(function() {
     $('#videos').click(function () {
         $.ajax({
             type: 'GET',
-            url: '/rooms',
-            success: function (list, e, jqXHR) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/rooms/' + list.rooms[3].licode_room + '/createToken',
-                    success: function (a, e, jqXHR) {
-                        var room = Erizo.Room({token: a});
-                        var stream = Erizo.Stream({video: true, audio:false, url:"file:///home/alex/tmp/566792063182219840.webm"});
-                        var subscribeToStreams = function (streams) {
-                            for (var index in streams) {
-                                var stream = streams[index];
-                                room.subscribe(stream);
-                            }
-                        };
-
-                        room.addEventListener("room-connected", function (roomEvent) {
-                            console.log('in the room');
-                            subscribeToStreams(roomEvent.streams);
-                            room.publish(stream);
-                        });
-
-                        room.addEventListener("stream-subscribed", function(streamEvent) {
-                            var stream = streamEvent.stream;
-                            stream.show('playit');
-                        });
-
-                        room.addEventListener("stream-added", function (streamEvent) {
-                            console.log('added stream');
-                            var streams = [];
-                            streams.push(streamEvent.stream);
-                            subscribeToStreams(streams);
-                        });
-
-                        room.connect();
-                    }
-                });
-            },
-            error: function (a, e, jqXHR) {
-                console.log('error');
+            url: '/videos',
+            success: function (list) {
+                for (var i in list) {
+                    $('#video-select').append($('<option>', {
+                        text: list.videos[i].room_name +' - Prof. '+ list.videos[i].teacher + "on" + list.videos[i].date,
+                        data_id: list.videos[i].id
+                    }));
+                }
             }
         });
+    });
+
+    $('#load-video').click(function(e){
+        var r = $("#video-select option:selected").attr('data_id');
+        console.log(r);
+        if(r != ''){
+            $('#playit').append($('<video>'), {src: '/videos/'+ r}).prop('controls',true);
+        }
     });
 
 

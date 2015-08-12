@@ -30,7 +30,7 @@ $(document).ready(function(){
     });
 
     var subscribeToStreams = function (streams) {
-        for (var index in streams) {
+        for (var i = 0; i < streams.length; i++) {
             var stream = streams[index];
             if (localStream.getID() !== stream.getID()) {
                 room.subscribe(stream);

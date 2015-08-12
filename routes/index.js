@@ -1,4 +1,6 @@
 var fs = require('fs');
+var sys = require('sys');
+var exec = require('child_process').exec;
 var usersMgr = require('../lib/usersManager');
 var express = require('express');
 var router = express.Router();
@@ -9,7 +11,7 @@ var resFileOpts = {
     root: './views/'
 };
 
-/* GET login page OR attemp automatic log-in */
+/* GET login page OR attempt automatic log-in */
 router.get('/', function(req, res){
     if(req.session.email === undefined || req.session.role === undefined){
         res.sendFile('login.html', resFileOpts);
@@ -78,7 +80,7 @@ router.get('/forgot', function (req, res) {
     res.sendFile('forgot.html',resFileOpts);
 });
 
-/* Attemp password recovery. */
+/* Attempt password recovery. */
 router.post('/forgot', function (req, res) {
     usersMgr.prepareReset(req.body.email, function(err){
         if(err){
@@ -89,7 +91,7 @@ router.post('/forgot', function (req, res) {
     });
 });
 
-/* Attemp log-in by token. */
+/* Attempt log-in by token. */
 router.get('/reset', function (req, res, next) {
     usersMgr.checkExpiration(req.query.email, req.query.token, function(err, u){
         if(err){
@@ -105,25 +107,35 @@ router.get('/reset', function (req, res, next) {
 
 
 router.get('/videos', function (req, res) {
-    res.writeHead(200, {"Content-Type": "text/html"});
-    res.end('<video src="/videos/sample" controls></video>');
+    if(req.session.nick === undefined) return res.redirect('/');
+    usersMgr.findVideos(req.session.nick, function(err, list){
+        if(err){
+            return next(err);
+        }else{
+            res.status('200').send({videos: list}).end();
+        }
+    });
 });
 
 router.get('/videos/:id', function (req, res, next) {
-    var file = '/home/alex/tmp/566792063182219840.webm';
+    if(req.session.nick === undefined) return res.redirect('/');
+    var file = '/home/alex/tmp/'+req.params.id+'.webm';
     var range = req.headers.range;
     var positions = range.replace(/bytes=/, "").split("-");
     var start = parseInt(positions[0], 10);
 
     fs.stat(file, function (err, stats) {
+        if(err){
+            return res.status('404').end();
+        }
         var total = stats.size;
         var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
-        var chunksize = (end - start) + 1;
+        var chunk_size = (end - start) + 1;
 
         res.writeHead(206, {
             "Content-Range": "bytes " + start + "-" + end + "/" + total,
             "Accept-Ranges": "bytes",
-            "Content-Length": chunksize,
+            "Content-Length": chunk_size,
             "Content-Type": "video/webm"
         });
 
@@ -135,6 +147,34 @@ router.get('/videos/:id', function (req, res, next) {
                 next(err);
             });
     });
+});
+
+router.post('/videos', function (req, res) {
+    if(req.session.nick === undefined) return res.redirect('/');
+    if(req.session.role !== 'teacher') return res.status('401').end();
+    var date = new Date();
+    var teacherRec = req.query.idTeacher;
+    var screenRec = req.query.idScreen;
+    var room = req.query.room;
+    //Wait for licode to free the file
+    setTimeout(function() {
+        exec("avconv -i /home/alex/tmp/"+teacherRec+".mkv "+teacherRec+".webm && "+
+            "avconv -i /home/alex/tmp/"+screenRec+".mkv "+screenRec+".webm", function (error, stdout, stderr) {
+            sys.print('stdout: ' + stdout);
+            sys.print('stderr: ' + stderr);
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }else{
+                usersMgr.addRecording(room ,teacherRec, screenRec, date, function(err){
+                    if(err){
+                        console.error(err);
+                    }else{
+                        console.log('recording added');
+                    }
+                });
+            }
+        });
+    }, 10000);
 });
 
 module.exports = router;

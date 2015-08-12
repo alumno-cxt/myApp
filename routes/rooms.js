@@ -57,7 +57,7 @@ router.get('/', function(req, res, next){
             res.status('401');
             break;
         case 'alumn':
-            usersMgr.findAlummnRooms(req.session.nick, function (err, list) {
+            usersMgr.findAlumnRooms(req.session.nick, function (err, list) {
                 if (err) return next(err);
                 res.status('200').send({rooms: list});
             });

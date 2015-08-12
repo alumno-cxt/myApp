@@ -83,25 +83,27 @@ function processData(allText) {
 }
 
 function createfunc(a) {
-    return function() { $.ajax({
-        type: 'GET',
-        url: '/users/' + a + '?role=alumn',
-        success: function (res) {
-            var f = false;
-            $('#loaded-alumns li').each(function () {
-                if ($(this).text() == a) {
-                    f = true;
+    return function() {
+        $.ajax({
+            type: 'GET',
+            url: '/users/' + a + '?role=alumn',
+            success: function (res) {
+                var f = false;
+                $('#loaded-alumns li').each(function () {
+                    if ($(this).text() == a) {
+                        f = true;
+                    }
+                });
+                if (f) return;
+                if ($('#loaded-alumns li').length > 19){
+                    crHandler('excess')
+                    return;
                 }
-            });
-            if (f) return;
-            if ($('#loaded-alumns li').length > 19){
-                crHandler('excess')
-                return;
+                $('#loaded-alumns').show();
+                $('#loaded-alumns').append($('<li>', {text: a}));
             }
-            $('#loaded-alumns').show();
-            $('#loaded-alumns').append($('<li>', {text: a}));
-        }
-    });};
+        });
+    };
 }
 
 function fileHandler(files){
