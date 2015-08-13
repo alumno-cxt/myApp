@@ -1,6 +1,7 @@
 function resetView(){
     $('#room-selector').hide();
     $('#update').hide();
+    $('#video-selector').hide();
 }
 
 
@@ -133,8 +134,8 @@ $(document).ready(function() {
             success: function (list) {
                 for (var i in list) {
                     $('#video-select').append($('<option>', {
-                        text: list.videos[i].room_name +' - Prof. '+ list.videos[i].teacher + "on" + list.videos[i].date,
-                        data_id: list.videos[i].id
+                        text: list.videos[i].room_name +' - Prof. '+ list.videos[i].teacher + "on" + list.videos[i].rec_date,
+                        data_teacherId: list.videos[i].teacher_video, data_screenId: list.videos[i].screen_video
                     }));
                 }
             }
@@ -142,9 +143,13 @@ $(document).ready(function() {
     });
 
     $('#load-video').click(function(e){
-        var r = $("#video-select option:selected").attr('data_id');
-        console.log(r);
-        if(r != ''){
+        resetView();
+        $('#playit').show();
+        var t = $("#video-select option:selected").attr('data_teacherId');
+        var s = $("#video-select option:selected").attr('data_screenId');
+        console.log(t,s);
+        if(t != ''){
+            $('#playit').append($('<video>'), {src: '/videos/'+ r}).prop('controls',true);
             $('#playit').append($('<video>'), {src: '/videos/'+ r}).prop('controls',true);
         }
     });

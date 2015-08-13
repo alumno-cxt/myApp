@@ -89,6 +89,36 @@ CREATE INDEX fki_classromm_fk
   USING btree
   (classroom COLLATE pg_catalog."default");
 
+-- Table: videos
+
+-- DROP TABLE videos;
+
+CREATE TABLE videos
+(
+  room character varying(30) NOT NULL,
+  rec_date date NOT NULL,
+  teacher_video character varying(30),
+  screen_video character varying(30),
+  CONSTRAINT video_pk PRIMARY KEY (room, rec_date),
+  CONSTRAINT video_fk FOREIGN KEY (room)
+  REFERENCES classroom (room_name) MATCH SIMPLE
+  ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+OIDS=FALSE
+);
+ALTER TABLE videos
+OWNER TO tfg;
+
+-- Index: fki_video_fk
+
+-- DROP INDEX fki_video_fk;
+
+CREATE INDEX fki_video_fk
+ON videos
+USING btree
+(room COLLATE pg_catalog."default");
+
 
 --Add admin user with PASSWORD = '1234'
 INSERT INTO app_user(nick, hash, role, email)

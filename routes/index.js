@@ -152,7 +152,7 @@ router.get('/videos/:id', function (req, res, next) {
 router.post('/videos', function (req, res) {
     if(req.session.nick === undefined) return res.redirect('/');
     if(req.session.role !== 'teacher') return res.status('401').end();
-    var date = new Date();
+    var date = (new Date()).toISOString().split('T');
     var teacherRec = req.query.idTeacher;
     var screenRec = req.query.idScreen;
     var room = req.query.room;
@@ -165,7 +165,7 @@ router.post('/videos', function (req, res) {
             if (error !== null) {
                 console.log('exec error: ' + error);
             }else{
-                usersMgr.addRecording(room ,teacherRec, screenRec, date, function(err){
+                usersMgr.addRecording(room ,teacherRec, screenRec, date[0], function(err){
                     if(err){
                         console.error(err);
                     }else{
