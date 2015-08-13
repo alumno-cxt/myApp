@@ -64,15 +64,18 @@ router.get('/home', function(req, res){
 router.get('/meeting', function(req, res){
     if(req.session.email === undefined){ res.status('401'); return;}
     if(req.session.token === undefined){ res.status('401'); return;}
-    if(req.session.role == 'alumn'){
-        res.render('meetingAlumn', {token: req.session.token, role: req.session.role, nick: req.session.nick });
-        return;
-    }
-    if(req.session.role == 'teacher'){
-        res.render('meetingTeacher', {token: req.session.token, role: req.session.role, nick: req.session.nick});
-        return;
-    }
-    res.status('404');
+    usersMgr.getRoomName(req.session.room, function(err, room_name){
+        if (err) return next(err);
+        if(req.session.role == 'alumn'){
+            res.render('meetingAlumn', {token: req.session.token, role: req.session.role, nick: req.session.nick });
+            return;
+        }
+        if(req.session.role == 'teacher'){
+            res.render('meetingTeacher', {room_name: room_name, token: req.session.token, role: req.session.role, nick: req.session.nick});
+            return;
+        }
+        res.status('404').end();
+    });
 });
 
 /* GET forgot page */
@@ -153,13 +156,14 @@ router.post('/videos', function (req, res) {
     if(req.session.nick === undefined) return res.redirect('/');
     if(req.session.role !== 'teacher') return res.status('401').end();
     var date = (new Date()).toISOString().split('T');
+    console.log(date[0]);
     var teacherRec = req.query.idTeacher;
     var screenRec = req.query.idScreen;
     var room = req.query.room;
     //Wait for licode to free the file
     setTimeout(function() {
-        exec("avconv -i /home/alex/tmp/"+teacherRec+".mkv "+teacherRec+".webm && "+
-            "avconv -i /home/alex/tmp/"+screenRec+".mkv "+screenRec+".webm", function (error, stdout, stderr) {
+        exec("avconv -i /home/alex/tmp/"+teacherRec+".mkv /home/alex/tmp/"+teacherRec+".webm && "+
+            "avconv -i /home/alex/tmp/"+screenRec+".mkv /home/alex/tmp/"+screenRec+".webm", function (error, stdout, stderr) {
             sys.print('stdout: ' + stdout);
             sys.print('stderr: ' + stderr);
             if (error !== null) {

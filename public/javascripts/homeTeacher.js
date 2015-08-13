@@ -148,11 +148,9 @@ $(document).ready(function() {
 
     $('#enter-room').click(function(e){
         var r = $("#my-select option:selected").attr('data_room');
-        console.log(r);
         $.ajax({
             type: 'POST',
             url: '/rooms/'+ r + '/createToken',
-            data: JSON.stringify({room: r}),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Content-type", "application/json");
             },

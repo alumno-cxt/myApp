@@ -2,7 +2,7 @@ $(document).ready(function(){
     //token is stored in <meta> tag at the html page
     var tokenJ = $('meta[name=token]').attr("content");
     var nick = $('meta[name=nick]').attr("content");
-    var room_name = $('meta[name=nick]').attr("content");
+    var room_name = $('meta[name=room_name]').attr("content");
 
     var recording = false;
     var sharing = false;
@@ -11,7 +11,7 @@ $(document).ready(function(){
     var room = Erizo.Room({token: tokenJ});
 
     var screenStream = Erizo.Stream({screen: true, videoSize:[1600, 1000, 960, 600], attributes:{nick: nick, role: 'teacher', media: 'screen'}});
-    var localStream = Erizo.Stream({video:true, audio: false, data:true, videoSize:[1600, 1000, 960, 600],
+    var localStream = Erizo.Stream({video:true, audio: true, data:true, videoSize:[1600, 1000, 960, 600],
         attributes:{nick: nick, role: 'teacher', type: 'video'}});
 
     localStream.addEventListener('access-accepted', function() {
@@ -56,7 +56,7 @@ $(document).ready(function(){
             });
             $.ajax({
                 type: 'POST',
-                url: '/video?room='+room_name+'&idTeacher='+recIdTeacher+'&idScreen='+recIdScreen,
+                url: '/videos?room='+room_name+'&idTeacher='+recIdTeacher+'&idScreen='+recIdScreen,
                 error: function (res) {
                 },
                 success: function (res){
@@ -103,7 +103,7 @@ $(document).ready(function(){
     room = Erizo.Room({token: tokenJ});
     var subscribeToStreams = function (streams) {
         for (var i = 0; i < streams.length; i++) {
-            var stream = streams[index];
+            var stream = streams[i];
             if (localStream.getID() !== stream.getID() && screenStream.getID() !== stream.getID()) {
                 room.subscribe(stream);
             }

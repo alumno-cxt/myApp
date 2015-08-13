@@ -84,6 +84,7 @@ router.post('/:room/createToken/', function(req, res) {
     var room = req.params.room;
     N.API.createToken(room, 'user', 'presenter', function(token) {
         req.session.token = token;
+        req.session.room = room;
         res.status('201').send(token).end();
     });
 }, function (err){

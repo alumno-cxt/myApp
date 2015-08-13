@@ -2,6 +2,7 @@ function resetView(){
     $('#room-selector').hide();
     $('#update').hide();
     $('#video-selector').hide();
+    $('#playit').hide();
 }
 
 
@@ -128,13 +129,14 @@ $(document).ready(function() {
     });
 
     $('#videos').click(function () {
+        $('#video-selector').show();
         $.ajax({
             type: 'GET',
             url: '/videos',
             success: function (list) {
-                for (var i in list) {
+                for (var i in list.videos) {
                     $('#video-select').append($('<option>', {
-                        text: list.videos[i].room_name +' - Prof. '+ list.videos[i].teacher + "on" + list.videos[i].rec_date,
+                        text: list.videos[i].room_name +' - Prof. '+ list.videos[i].teacher + " on " + list.videos[i].rec_date,
                         data_teacherId: list.videos[i].teacher_video, data_screenId: list.videos[i].screen_video
                     }));
                 }
@@ -149,8 +151,8 @@ $(document).ready(function() {
         var s = $("#video-select option:selected").attr('data_screenId');
         console.log(t,s);
         if(t != ''){
-            $('#playit').append($('<video>'), {src: '/videos/'+ r}).prop('controls',true);
-            $('#playit').append($('<video>'), {src: '/videos/'+ r}).prop('controls',true);
+            $('#playit').append($('<video src="/videos/'+s+'" type="video/webm" controls></video>'));
+            $('#playit').append($('<video src="/videos/'+t+'" type="video/webm" controls></video>'));
         }
     });
 
