@@ -1,6 +1,29 @@
+-- Role: tfg
+
+
+
+CREATE ROLE tfg LOGIN
+  ENCRYPTED PASSWORD 'md53fdf8a0533f42e1a219a788b6124c3b5'
+  NOSUPERUSER INHERIT CREATEDB NOCREATEROLE NOREPLICATION;
+
+
+-- Database: "tfgDB"
+
+
+
+CREATE DATABASE "tfgDB"
+  WITH OWNER = tfg
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'es_ES.UTF-8'
+       LC_CTYPE = 'es_ES.UTF-8'
+       CONNECTION LIMIT = -1;
+
+
+
 -- Table: app_user
 
--- DROP TABLE app_user;
+
 
 CREATE TABLE app_user
 (
@@ -21,7 +44,7 @@ ALTER TABLE app_user
 
 -- Table: classroom
 
--- DROP TABLE classroom;
+
 
 CREATE TABLE classroom
 (
@@ -42,7 +65,7 @@ ALTER TABLE classroom
 
 -- Index: fki_teacher_fk
 
--- DROP INDEX fki_teacher_fk;
+
 
 CREATE INDEX fki_teacher_fk
   ON classroom
@@ -51,7 +74,7 @@ CREATE INDEX fki_teacher_fk
 
 -- Table: asists
 
--- DROP TABLE asists;
+
 
 CREATE TABLE asists
 (
@@ -73,7 +96,7 @@ ALTER TABLE asists
 
 -- Index: fki_alumn_fk
 
--- DROP INDEX fki_alumn_fk;
+
 
 CREATE INDEX fki_alumn_fk
   ON asists
@@ -82,7 +105,7 @@ CREATE INDEX fki_alumn_fk
 
 -- Index: fki_classromm_fk
 
--- DROP INDEX fki_classromm_fk;
+
 
 CREATE INDEX fki_classromm_fk
   ON asists
@@ -91,7 +114,7 @@ CREATE INDEX fki_classromm_fk
 
 -- Table: videos
 
--- DROP TABLE videos;
+
 
 CREATE TABLE videos
 (
@@ -112,7 +135,7 @@ OWNER TO tfg;
 
 -- Index: fki_video_fk
 
--- DROP INDEX fki_video_fk;
+
 
 CREATE INDEX fki_video_fk
 ON videos
@@ -123,5 +146,19 @@ USING btree
 --Add admin user with PASSWORD = '1234'
 INSERT INTO app_user(nick, hash, role, email)
 VALUES ('admin', 'pbkdf2$10000$bca53acb5cec00083784ddedd046bdf1dae89c343f89914289513d03ed88c5b808f8abfc509ed90403b797dd8b9af49db314818588afa0c9e19ed7bd833d3e17$b3d1af64d95ec4cc4d52c1e706d1ebf01772e6fb8d3839a935bc38d40d2e5f1ffa99b8ce820a341b179ae531583253c2d2aa617221ee982376cc37454fca08f1', 'admin', 'admin@tfg.com');
+
+
+-- DROP ROLE tfg;
+-- DROP DATABASE "tfgDB";
+-- DROP TABLE app_user;
+-- DROP TABLE app_user;
+-- DROP TABLE classroom;
+-- DROP INDEX fki_teacher_fk;
+-- DROP TABLE asists;
+-- DROP INDEX fki_alumn_fk;
+-- DROP INDEX fki_classromm_fk;
+-- DROP TABLE videos;
+-- DROP INDEX fki_video_fk;
+
 
 
