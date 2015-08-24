@@ -51,6 +51,8 @@ function crHandler(code){
 }
 
 function menuHandler(){
+    $('#delete-room-select').empty();
+    $('.current-menu-item').removeClass('current-menu-item');
     $('#create-room').hide();
     $('#delete-room-selector').hide();
 }
@@ -126,14 +128,21 @@ function fileHandler(files){
 }
 
 $(document).ready(function() {
+    $('#home').click(function(){
+        menuHandler();
+        $('#home').addClass('current-menu-item');
+    });
+
     $('#create-room-show').click(function () {
         menuHandler();
+        $('#subjects').addClass('current-menu-item');
         $('#create-room').show();
     });
 
     $('#delete-room-show').click(function () {
         $('#delete-room-select').empty();
         menuHandler();
+        $('#subjects').addClass('current-menu-item');
         $('#delete-room-selector').show();
         $.ajax({
             type: 'GET',

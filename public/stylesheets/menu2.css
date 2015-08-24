@@ -1,17 +1,17 @@
-#primary_nav_wrap
+#menu
 {
     position: relative;
     left: 33%;
 }
 
-#primary_nav_wrap ul
+#menu ul
 {
     list-style: none;
     position: relative;
 
 }
 
-#primary_nav_wrap ul a
+#menu ul a
 {
     display:block;
     color:#000;
@@ -23,7 +23,7 @@
     font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
 }
 
-#primary_nav_wrap ul li
+#menu ul li
 {
     position:relative;
     float:left;
@@ -33,7 +33,7 @@
     border-left: 1px solid;
 }
 /*Apply to first item on main menu*/
-#primary_nav_wrap > ul > li:last-child{
+#menu > ul > li:last-child{
     background: linear-gradient(to bottom, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -42,30 +42,30 @@
 }
 
 /*Apply to last item on main menu*/
-#primary_nav_wrap > ul > li:first-child{
+#menu > ul > li:first-child{
     background: linear-gradient(to bottom, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
 
 /*Apply to dropdown elements*/
-#primary_nav_wrap > ul > li ul li {
+#menu > ul > li ul li {
     border-right: 1px solid;
     border-top: 1px solid;
-    z-index: 99;
+    z-index: 9999;
 }
 
-#primary_nav_wrap ul li.current-menu-item
+#menu ul li.current-menu-item
 {
-    background:#def
+    background: #f1f1ff
 }
 
-#primary_nav_wrap ul li:hover
+#menu ul li:hover
 {
     background:#f6f6f6
 }
 
-#primary_nav_wrap ul ul
+#menu ul ul
 {
     display:none;
     position:absolute;
@@ -75,25 +75,25 @@
     padding:0
 }
 
-#primary_nav_wrap ul ul li
+#menu ul ul li
 {
     float:none;
     width:200px
 }
 
-#primary_nav_wrap ul ul a
+#menu ul ul a
 {
     line-height:120%;
     padding:10px 15px
 }
 
-#primary_nav_wrap ul ul ul
+#menu ul ul ul
 {
     top:0;
     left:100%
 }
 
-#primary_nav_wrap ul li:hover > ul
+#menu ul li:hover > ul
 {
     display:block
 }

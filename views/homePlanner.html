@@ -6,34 +6,31 @@
     <script src='/javascripts/external/jquery-1.11.3.min.js'></script>
     <script src='/javascripts/homePlanner.js'></script>
     <link rel="stylesheet" href="/stylesheets/create-room.css">
-    <link rel="stylesheet" href="/stylesheets/menu.css">
+    <link rel="stylesheet" href="/stylesheets/menu2.css">
 </head>
 
 <body>
-<header class="main-header">
-    <a class="logo" href="#"></a>
-    <ul class="main-nav">
-        <li class="dropdown">
-            <a href="#">Welcome</a>
-            <ul class="drop-nav">
-                <li><a href="#">Personal data</a></li>
-                <li id="log-out"><a href="#">Log out</a></li>
+<nav id="menu">
+    <ul>
+        <li id="home" class="current-menu-item"><a href="#">Home</a>
+            <ul>
+                <li id="log-out"><a href="#">Log Out</a></li>
+                <li id="show-update"><a href="#">Personal data</a></li>
             </ul>
         </li>
-        <li class="dropdown">
-            <a href="#">Rooms</a>
-            <ul class="drop-nav">
+        <li id="subjects"><a href="#">Subjects</a>
+            <ul>
                 <li id="create-room-show"><a href="#">Create</a></li>
-                <li id="delete-room-show"><a href="#">Eliminate</a></li>
+                <li id="remove-room-show"><a href="#">Remove</a></li>
             </ul>
         </li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="#">Contact Us</a></li>
     </ul>
-</header>
+</nav>
 
 <div id="create-room" class="create-room-card">
 
-    <h1>Create room</h1><br>
+    <h1>Create subject</h1><br>
 
     <form id="create-room-form">
         <input id="room-name" type="text" name="room-name" placeholder="Nname" autocomplete="off">
@@ -62,7 +59,7 @@
 </div>
 
 <div id="delete-room-selector">
-    <h1>Room list</h1><br>
+    <h1>Remove subject</h1><br>
     <select id="delete-room-select" size="10">
     </select>
     <button id="delete-room" type="button">Delete Room</button>

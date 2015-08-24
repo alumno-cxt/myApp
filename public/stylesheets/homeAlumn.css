@@ -7,9 +7,11 @@ body {
 }
 
 #playit{
-    display: none;
-    width: 800px;
-    height: 400px;
+    top: 17%;
+    left: 9%;
+    width: 82%;
+    height: 75%;
+    position: absolute;
 }
 
 #playit video{

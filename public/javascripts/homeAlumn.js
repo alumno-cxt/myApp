@@ -1,8 +1,12 @@
 function resetView(){
+    $('#video-select').empty();
+    $('#my-select').empty();
+    $('.current-menu-item').removeClass('current-menu-item');
     $('#room-selector').hide();
     $('#update').hide();
     $('#video-selector').hide();
     $('#playit').hide();
+    $('#playit').empty();
 }
 
 
@@ -76,6 +80,11 @@ var emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-
 var passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,25}$/;
 
 $(document).ready(function() {
+    $('#home').click(function(){
+        resetView();
+        $('#home').addClass('current-menu-item');
+    });
+
     $('#log-out').click(function () {
         $.ajax({
             type: 'DELETE',
@@ -88,7 +97,7 @@ $(document).ready(function() {
 
     $('#show-update').click(function () {
         resetView();
-        $('#update').show();
+        $('#home').addClass('current-menu-item');
         $.ajax({
             type: 'GET',
             url: '/users/self',
@@ -99,6 +108,7 @@ $(document).ready(function() {
                 $('#role').val(res.role);
                 $('#nick').prop('disabled', true);
                 $('#role').prop('disabled', true);
+                $('#update').show();
             }
         });
     });
@@ -129,6 +139,8 @@ $(document).ready(function() {
     });
 
     $('#videos').click(function () {
+        resetView();
+        $('#videos').addClass('current-menu-item');
         $('#video-selector').show();
         $.ajax({
             type: 'GET',
@@ -145,20 +157,23 @@ $(document).ready(function() {
     });
 
     $('#load-video').click(function(e){
-        resetView();
-        $('#playit').show();
         var t = $("#video-select option:selected").attr('data_teacherId');
         var s = $("#video-select option:selected").attr('data_screenId');
         console.log(t,s);
-        if(t != ''){
-            $('#playit').append($('<video src="/videos/'+s+'" type="video/webm" controls></video>'));
-            $('#playit').append($('<video src="/videos/'+t+'" type="video/webm" controls></video>'));
+        if(t !== undefined){
+            $('#playit').append($('<video id="tea" src="/videos/'+s+'" type="video/webm" controls></video>'));
+            $('#playit').append($('<video id="scr" src="/videos/'+t+'" type="video/webm" controls></video>'));
+            $('#tea').get(0).play();
+            $('#scr').get(0).play();
+            $('#playit').show();
+            $('#video-selector').hide();
         }
     });
 
 
     $('#rooms').click(function () {
         resetView();
+        $('#rooms').addClass('current-menu-item');
         $('#room-selector').show();
         $.ajax({
             type: 'GET',

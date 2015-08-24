@@ -33,6 +33,9 @@ config.nuve_url = 'http://localhost:3000/';
  *      POSTGRESQL CONFIG      *
  * *************************** */
 
+//DB server hostname
+config.db_hostname = 'localhost';
+
 //DB name
 config.db_name = 'tfgDB';
 

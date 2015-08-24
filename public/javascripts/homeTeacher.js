@@ -1,4 +1,6 @@
 function resetView(){
+    $('#my-select').empty();
+    $('.current-menu-item').removeClass('current-menu-item');
     $('#room-selector').hide();
     $('#update').hide()
 }
@@ -73,6 +75,11 @@ var emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-
 var passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,25}$/;
 
 $(document).ready(function() {
+    $('#home').click(function(){
+        resetView();
+        $('#home').addClass('current-menu-item');
+    });
+
     $('#log-out').click(function () {
         $.ajax({
             type: 'DELETE',
@@ -127,6 +134,7 @@ $(document).ready(function() {
 
     $('#rooms').click(function () {
         resetView();
+        $('#rooms').addClass('current-menu-item');
         $('#room-selector').show();
         $.ajax({
             type: 'GET',

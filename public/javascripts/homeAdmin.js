@@ -1,6 +1,13 @@
 $(document).ready(function(){
     $('#register-show').click(function(){
-        $('#register').show();
+        resetView();
+        $('#register').show().addClass('current-menu-item');
+        $('#rooms').addClass('current-menu-item');
+    });
+
+    $('#home').click(function(){
+        $('#home').addClass('current-menu-item');
+        resetView();
     });
 
     $('#log-out').click(function(){
@@ -15,7 +22,7 @@ $(document).ready(function(){
 
     $('#register-form').submit(function(e){
         e.preventDefault();
-        formData = $(this).serialize();
+        var formData = $(this).serialize();
         if(registerValidator()) return;
         registerHandler('submit');
         $.ajax({
@@ -37,6 +44,7 @@ $(document).ready(function(){
 });
 
 function resetView(){
+    $('.current-menu-item').removeClass('current-menu-item');
     $('#register').hide();
 
 }

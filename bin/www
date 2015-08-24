@@ -5,7 +5,7 @@
  */
 
 var config = require('../app_config');
-var http_app = require('../http_app');
+var http_app = require('../lib/http_app');
 var https_app = require('../app');
 var debug = require('debug')('myApp:server');
 var https = require('https');
