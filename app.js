@@ -4,6 +4,7 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var config = require('./app_config');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -12,8 +13,8 @@ var rooms = require('./routes/rooms');
 var nuve = require('./lib/external/nuve');
 
 //licode configure
-var config = require('../../licode/licode_config');
-nuve.API.init(config.nuve.superserviceID, config.nuve.superserviceKey, 'http://localhost:3000/');
+var nuve_config = require(config.licode_config);
+nuve.API.init(nuve_config.nuve.superserviceID, nuve_config.nuve.superserviceKey, config.nuve_url);
 
 
 var app = express();

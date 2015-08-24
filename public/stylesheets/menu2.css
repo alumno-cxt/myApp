@@ -1,0 +1,99 @@
+#primary_nav_wrap
+{
+    position: relative;
+    left: 33%;
+}
+
+#primary_nav_wrap ul
+{
+    list-style: none;
+    position: relative;
+
+}
+
+#primary_nav_wrap ul a
+{
+    display:block;
+    color:#000;
+    text-decoration:none;
+    font-weight:700;
+    font-size:12px;
+    line-height:32px;
+    padding:0 15px;
+    font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
+}
+
+#primary_nav_wrap ul li
+{
+    position:relative;
+    float:left;
+    background: linear-gradient(to bottom, #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* W3C */
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+}
+/*Apply to first item on main menu*/
+#primary_nav_wrap > ul > li:last-child{
+    background: linear-gradient(to bottom, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-right:2px;
+    border-right: 1px solid;
+}
+
+/*Apply to last item on main menu*/
+#primary_nav_wrap > ul > li:first-child{
+    background: linear-gradient(to bottom, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+/*Apply to dropdown elements*/
+#primary_nav_wrap > ul > li ul li {
+    border-right: 1px solid;
+    border-top: 1px solid;
+    z-index: 99;
+}
+
+#primary_nav_wrap ul li.current-menu-item
+{
+    background:#def
+}
+
+#primary_nav_wrap ul li:hover
+{
+    background:#f6f6f6
+}
+
+#primary_nav_wrap ul ul
+{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    background:#fff;
+    padding:0
+}
+
+#primary_nav_wrap ul ul li
+{
+    float:none;
+    width:200px
+}
+
+#primary_nav_wrap ul ul a
+{
+    line-height:120%;
+    padding:10px 15px
+}
+
+#primary_nav_wrap ul ul ul
+{
+    top:0;
+    left:100%
+}
+
+#primary_nav_wrap ul li:hover > ul
+{
+    display:block
+}

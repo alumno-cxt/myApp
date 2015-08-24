@@ -6,29 +6,29 @@
     <script src='/javascripts/external/jquery-1.11.3.min.js'></script>
     <script src='/javascripts/homeAdmin.js'></script>
     <link rel="stylesheet" href="/stylesheets/register.css">
-    <link rel="stylesheet" href="/stylesheets/menu.css">
+    <link rel="stylesheet" href="/stylesheets/menu2.css">
 </head>
 
 <body>
-<header class="main-header">
-    <a class="logo" href="#"></a>
-    <ul class="main-nav">
-        <li class="dropdown">
-            <a href="#">Welcome</a>
-            <ul class="drop-nav">
-                <li id="log-out"><a href="#">Log out</a></li>
+    <div id="menu">
+        <nav id="primary_nav_wrap">
+            <ul>
+                <li class="current-menu-item"><a href="#">Home</a>
+                    <ul>
+                        <li id="log-out"><a href="#">Log Out</a></li>
+                        <li id="show-update"><a href="#">Personal data</a></li>
+                    </ul>
+                </li>
+                <li id="rooms"><a href="#">Users</a>
+                <ul>
+                    <li id="register-show"><a href="#">Create</a></li>
+                    <li><a href="#">Remove</a></li>
+                </ul>
+                </li>
+                <li><a href="#">Contact Us</a></li>
             </ul>
-        </li>
-        <li class="dropdown">
-            <a href="#">Rooms</a>
-            <ul class="drop-nav">
-                <li id="register-show"><a href="#">Create</a></li>
-                <li><a href="#">Add alumns</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Contact</a></li>
-    </ul>
-</header>
+        </nav>
+    </div>
 
 <div id="register" class="register-card">
 
