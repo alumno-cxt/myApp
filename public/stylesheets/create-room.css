@@ -126,7 +126,7 @@ body {
     color: green;
 }
 
-.alumn-suggestion-list-cr {
+.student-suggestion-list-cr {
     display: none;
     position: relative;
     background: #FFF none repeat scroll 0% 0%;
@@ -142,7 +142,7 @@ body {
     right: -380px;
 }
 
-.alumn-suggestion-list-cr li:hover{
+.student-suggestion-list-cr li:hover{
     background-color: #5e604f;
 }
 
@@ -166,7 +166,7 @@ body {
     background-color: #5e604f;
 }
 
-.loaded-alumn-list {
+.loaded-student-list {
     display: none;
     position: absolute;
     background: #FFF none repeat scroll 0% 0%;
@@ -182,7 +182,7 @@ body {
     top: 200px;
 }
 
-#add-alumn-cr{
+#add-student-cr{
     padding: 4px;
     z-index: 150;
     overflow-y: scroll;

@@ -11,7 +11,7 @@ router.post('/', function(req, res, next) {
     }
     N.API.createRoom(req.body.room_name, function (room) {
         var data = {room_name: req.body.room_name, teacher: req.body.teacher,
-            alumns: req.body.alumns ,licode_room: room._id};
+            students: req.body.students ,licode_room: room._id};
         usersMgr.createRoom(data, function(err){
             if(err){
                 N.API.deleteRoom(room._id, function(){
@@ -56,8 +56,8 @@ router.get('/', function(req, res, next){
         case undefined:
             res.status('401');
             break;
-        case 'alumn':
-            usersMgr.findAlumnRooms(req.session.nick, function (err, list) {
+        case 'student':
+            usersMgr.findStudentRooms(req.session.nick, function (err, list) {
                 if (err) return next(err);
                 res.status('200').send({rooms: list});
             });

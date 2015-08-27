@@ -49,8 +49,8 @@ router.get('/home', function(req, res){
         if(req.session.role === 'planner'){
             res.sendFile('homePlanner.html',resFileOpts);
         }
-        if(req.session.role === 'alumn'){
-            res.sendFile('homeAlumn.html', resFileOpts);
+        if(req.session.role === 'student'){
+            res.sendFile('homeStudent.html', resFileOpts);
         }
         if(req.session.role === 'teacher'){
             res.sendFile('homeTeacher.html', resFileOpts);
@@ -66,8 +66,8 @@ router.get('/meeting', function(req, res){
     if(req.session.token === undefined){ res.status('401'); return;}
     usersMgr.getRoomName(req.session.room, function(err, room_name){
         if (err) return next(err);
-        if(req.session.role == 'alumn'){
-            res.render('meetingAlumn', {token: req.session.token, role: req.session.role, nick: req.session.nick });
+        if(req.session.role == 'student'){
+            res.render('meetingStudent', {token: req.session.token, role: req.session.role, nick: req.session.nick });
             return;
         }
         if(req.session.role == 'teacher'){

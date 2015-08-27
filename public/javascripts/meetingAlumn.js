@@ -62,7 +62,7 @@ $(document).ready(function(){
                 stream.show('video-teacher');
             }
         }else {
-            $('#video-alumn').append($('<div>').attr('id', stream.getID().toString()));
+            $('#video-student').append($('<div>').attr('id', stream.getID().toString()));
             stream.show(stream.getID().toString());
         }
     });

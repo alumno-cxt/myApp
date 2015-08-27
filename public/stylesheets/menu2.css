@@ -1,13 +1,19 @@
 #menu
 {
     position: relative;
-    left: 33%;
+    left: -1%;
+    top: -3%;
+    width: 102%;
+    background: linear-gradient(to bottom, #3b679e 0%,#3b679e 27%,#207cca 59%,#2b88d9 76%,#7db9e8 100%); /* W3C */
+    height: 7%;
 }
 
 #menu ul
 {
     list-style: none;
     position: relative;
+    top: 13%;
+    left: 35%;
 
 }
 
@@ -18,7 +24,7 @@
     text-decoration:none;
     font-weight:700;
     font-size:12px;
-    line-height:32px;
+    line-height:240%;
     padding:0 15px;
     font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
 }

@@ -89,8 +89,8 @@ router.get('/:nick', function(req, res, next){
                     }
                 });
             }
-            if (req.query.role === 'alumn') {
-                usersMgr.isAlumn(req.params.nick, '', function (err) {
+            if (req.query.role === 'student') {
+                usersMgr.isStudent(req.params.nick, '', function (err) {
                     if (!err) {
                         res.status('404').end();
                     } else {

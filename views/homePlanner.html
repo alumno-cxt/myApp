@@ -6,6 +6,7 @@
     <script src='/javascripts/external/jquery-1.11.3.min.js'></script>
     <script src='/javascripts/homePlanner.js'></script>
     <link rel="stylesheet" href="/stylesheets/create-room.css">
+    <link rel="stylesheet" href="/stylesheets/homePlanner.css">
     <link rel="stylesheet" href="/stylesheets/menu2.css">
 </head>
 
@@ -28,6 +29,23 @@
     </ul>
 </nav>
 
+<div id="update" class="update-card">
+
+    <h1>Update user</h1><br>
+
+    <form id="update-form">
+        <input id="nick" type="text" name="nick" placeholder="Username">
+        <input id="email" type="text" name="email" placeholder="e-mail">
+        <input id="role" type="text" name="role" placeholder="">
+        <input id="pass" type="password" name="pass" placeholder="Password">
+        <input type="submit" class="update update-submit" value="Update">
+    </form>
+
+    <div id="update-success" class="update-help">Data updated</div>
+    <div id="update-loading"><img src="/images/loader.gif"/></div>
+    <div id="update-error" class="update-help"></div>
+</div>
+
 <div id="create-room" class="create-room-card">
 
     <h1>Create subject</h1><br>
@@ -35,21 +53,21 @@
     <form id="create-room-form">
         <input id="room-name" type="text" name="room-name" placeholder="Nname" autocomplete="off">
         <input class="teacher" type="text" name="teacher" placeholder="Professor" autocomplete="off" list="teacher-suggestion">
-        <input class="alumns" type="text" name="alumns" placeholder="Alumns" autocomplete="off" list="alumn-suggestion">
+        <input class="students" type="text" name="students" placeholder="Students" autocomplete="off" list="student-suggestion">
         <input type="submit" class="create-room create-room-submit" value="Create">
     </form>
     <input type="file" id="file-input" onchange="fileHandler(this.files)">
 
 
-    <button id="add-alumn-cr">+</button>
+    <button id="add-student-cr">+</button>
 
     <datalist id="teacher-suggestion">
     </datalist>
 
-    <datalist id="alumn-suggestion">
+    <datalist id="student-suggestion">
     </datalist>
 
-    <ul id="loaded-alumns" class="loaded-alumn-list">
+    <ul id="loaded-students" class="loaded-student-list">
     </ul>
 
     <div id="create-room-success" class="create-room-help">Room successfully created</div>

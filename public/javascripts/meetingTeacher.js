@@ -124,7 +124,7 @@ $(document).ready(function(){
             var $c = $('#chatbox').append($('<div>'));
             $c.find('div').last().html('<p><b>' + evt.msg.nick + ': </b>' + evt.msg.text + '</p>');
         });
-        $('#video-alumn').append($('<div>').attr('id', stream.getID().toString()));
+        $('#video-student').append($('<div>').attr('id', stream.getID().toString()));
         stream.show(stream.getID().toString());
     });
 

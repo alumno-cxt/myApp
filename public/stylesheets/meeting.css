@@ -34,7 +34,7 @@ body {
 }
 
 #video-teacher {
-    border: 15px solid grey;
+
     /*border-radius: 10px;*/
     position: relative;
     background-color: #710C47;
@@ -58,7 +58,7 @@ body {
     position: relative;
 }
 
-#video-alumn{
+#video-student{
     background: #008000 none repeat scroll 0% 0%;
     width: 100%;
     position: relative;
@@ -67,7 +67,7 @@ body {
     margin-top: 10px;
 }
 
-#video-alumn div{
+#video-student div{
     background: red;
     display: inline-block;
     width: 10%;
