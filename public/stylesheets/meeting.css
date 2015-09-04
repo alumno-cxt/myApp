@@ -63,15 +63,43 @@ body {
     width: 100%;
     position: relative;
     height: 76px;
-    float: left;
+    display: inline-block;
     margin-top: 10px;
+    padding: 10px;
 }
 
-#video-student div{
+#video-student > div{
+    position: relative;
     background: red;
     display: inline-block;
     width: 10%;
-    height: 50%;
+    height: 100%;
+}
+
+.sname{
+    position: relative;
+    display: block;
+    height: 20%;
+    background-color: orange;
+    width: 100%;
+    top: -19%;
+    text-align: center;
+}
+
+.sframe{
+    position: relative;
+    height: 80%;
+    display: block;
+    background-color: blue;
+    width: 100%;
+}
+
+#wrapper {
+    position: relative;
+    background: #EBF4FB none repeat scroll 0% 0%;
+    border: 1px solid #ACD8F0;
+    width: 100%;
+    height: 231px;
 }
 
 #wrapper {

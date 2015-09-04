@@ -148,7 +148,7 @@ $(document).ready(function() {
             success: function (list) {
                 for (var i in list.videos) {
                     $('#video-select').append($('<option>', {
-                        text: list.videos[i].room_name +' - Prof. '+ list.videos[i].teacher + " on " + list.videos[i].rec_date,
+                        text: list.videos[i].room_name +' - Teacher: '+ list.videos[i].teacher + " on " + list.videos[i].rec_date,
                         data_teacherId: list.videos[i].teacher_video, data_screenId: list.videos[i].screen_video
                     }));
                 }
@@ -183,7 +183,7 @@ $(document).ready(function() {
                 for (var i in list.rooms) {
                     console.log(list.rooms[i]);
                     $('#my-select').append($('<option>', {
-                        text: list.rooms[i].room_name +' - Prof. '+ list.rooms[i].teacher, data_room: list.rooms[i].licode_room
+                        text: list.rooms[i].room_name +' - Teacher: '+ list.rooms[i].teacher, data_room: list.rooms[i].licode_room
                     }));
                 }
             },

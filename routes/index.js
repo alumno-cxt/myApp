@@ -60,10 +60,10 @@ router.get('/home', function(req, res){
     }
 });
 
-/* GET home page. */
+/* GET meeting page. */
 router.get('/meeting', function(req, res){
-    if(req.session.email === undefined){ res.status('401'); return;}
-    if(req.session.token === undefined){ res.status('401'); return;}
+    if(req.session.email == undefined){ res.status('404').end(); return;}
+    if(req.session.token == undefined){ res.status('401').end(); return;}
     usersMgr.getRoomName(req.session.room, function(err, room_name){
         if (err) return next(err);
         if(req.session.role == 'student'){

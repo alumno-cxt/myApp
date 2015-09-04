@@ -11,7 +11,7 @@ $(document).ready(function(){
     localStream.init();
     localStream.addEventListener('access-accepted', function() {
         console.log('access granted');
-        if(conn) room.publish(localStream, {maxVideoBW: 300});
+        if(conn) room.publish(localStream, {maxVideoBW: 100});
     });
 
 	$('#message').submit(function(e){
@@ -23,7 +23,7 @@ $(document).ready(function(){
             $c.focus();
             $c = $('#chatbox');
             $c.append($('<div>'));
-            $c.find('div').last().html('<p><b>' + nick + ': </b>' + m + '</p>');
+            $c.find('div').last().html('<p class="'+ nick +'"><b>' + nick + ': </b>' + m + '</p>');
             $c.animate({scrollTop: 0xfffffff});
             localStream.sendData({text: m, nick: nick});
         }
@@ -62,7 +62,9 @@ $(document).ready(function(){
                 stream.show('video-teacher');
             }
         }else {
-            $('#video-student').append($('<div>').attr('id', stream.getID().toString()));
+            $('#video-student').append($('<div>'));
+            $('#video-student > div').last().append($('<div>').attr({'id': stream.getID().toString(), 'class': "sframe"}));
+            $('#video-student > div').last().append($('<p>').attr('class', "sname").html(attributes.nick));
             stream.show(stream.getID().toString());
         }
     });
@@ -80,7 +82,7 @@ $(document).ready(function(){
         // Remove stream from DOM
         var stream = streamEvent.stream;
         if (stream.elementID !== undefined) {
-            $('#' + stream.elementID.toString()).remove();
+            $('#' + stream.elementID.toString()).parent().remove();
         }
     });
 
